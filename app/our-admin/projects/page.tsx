@@ -1,690 +1,226 @@
 "use client"
 
 import { useState } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
+  ChevronRight,
+  Download,
+  Plus,
   Search,
-  Clock,
-  CheckCircle,
-  XCircle,
-  Eye,
-  FileText,
-  Mail,
-  User,
-  Calendar,
-  DollarSign,
-  MapPin,
-//   Phone,
-//   Twitter,
-  Users,
-  Link as LinkIcon,
-  Shield,
-  Image as ImageIcon,
+  Filter,
+  MoreVertical,
 } from "lucide-react";
-import { toast } from "sonner";
-import type { ProjectSubmissionStatus } from "@/types";
 
-// Extended mock data for applications
-interface ProjectApplication {
+type ProjectStatus = "active" | "at-risk" | "completed" | "delayed" | "draft";
+
+interface Project {
   id: string;
-  fullName: string;
-  email: string;
-  phone: string;
-  twitterHandle?: string;
-  location: string;
-  projectTitle: string;
-  projectCategory: string;
-  projectDescription: string;
-  targetAmount: number;
-  expectedBeneficiaries: number;
-  startDate: string;
-  endDate: string;
-  governmentIdUrl?: string;
-  personalPhotoUrl?: string;
-  supportingDocuments?: string[];
-  whyApprove: string;
-  trackRecord?: string;
-  previousWorkLinks?: string[];
-  status: ProjectSubmissionStatus;
-  submittedAt: string;
-  reviewedAt?: string;
-  adminNotes?: string;
-  rejectionReason?: string;
+  name: string;
+  code: string;
+  region: string;
+  org: string;
+  orgInitials: string;
+  orgColor: string;
+  status: ProjectStatus;
+  progress: number;
+  dueDate: string;
 }
 
-const mockApplications: ProjectApplication[] = [
-  {
-    id: "app-1",
-    fullName: "Adebayo Ogunlesi",
-    email: "adebayo@example.com",
-    phone: "+234 801 234 5678",
-    twitterHandle: "@adebayotech",
-    location: "Lagos",
-    projectTitle: "Tech Empowerment Lagos 2025",
-    projectCategory: "Tech Tools",
-    projectDescription: "A comprehensive program to distribute laptops to 200 underprivileged students in Lagos State who are studying computer science and related fields. The goal is to bridge the digital divide and provide these students with the tools they need to succeed in their studies and future careers.",
-    targetAmount: 15000000,
-    expectedBeneficiaries: 200,
-    startDate: "2025-02-01",
-    endDate: "2025-06-30",
-    governmentIdUrl: "/placeholder.svg",
-    personalPhotoUrl: "/placeholder.svg",
-    supportingDocuments: ["proposal.pdf", "budget.xlsx"],
-    whyApprove: "I have been working in tech education for 5 years and have successfully organized 3 similar programs. This project addresses a critical need in our community where many talented students lack access to basic computing resources.",
-    trackRecord: "Previously organized laptop distribution for 50 students in 2023. Volunteered with Code Lagos for 2 years. Founded a local coding bootcamp that has trained 200+ students.",
-    previousWorkLinks: ["https://twitter.com/adebayotech/status/123", "https://codelags.org/volunteers/adebayo"],
-    status: "pending",
-    submittedAt: "2025-01-10T10:30:00Z",
-  },
-  {
-    id: "app-2",
-    fullName: "Fatima Abubakar",
-    email: "fatima@example.com",
-    phone: "+234 803 456 7890",
-    location: "Kano",
-    projectTitle: "Northern Girls Education Fund",
-    projectCategory: "Scholarships",
-    projectDescription: "Scholarship program for 100 girls in Northern Nigeria to continue their secondary education. Covers tuition, books, and uniforms.",
-    targetAmount: 8000000,
-    expectedBeneficiaries: 100,
-    startDate: "2025-03-01",
-    endDate: "2025-12-31",
-    governmentIdUrl: "/placeholder.svg",
-    personalPhotoUrl: "/placeholder.svg",
-    whyApprove: "As a teacher for 10 years, I've seen many girls drop out due to financial constraints. This program will give them a chance to complete their education.",
-    status: "approved",
-    submittedAt: "2025-01-05T08:00:00Z",
-    reviewedAt: "2025-01-08T14:00:00Z",
-    adminNotes: "Strong application with clear impact metrics. Approved for immediate launch.",
-  },
-  {
-    id: "app-3",
-    fullName: "Chukwuemeka Obi",
-    email: "emeka@example.com",
-    phone: "+234 805 678 9012",
-    twitterHandle: "@emekaobi",
-    location: "Enugu",
-    projectTitle: "Community Food Drive",
-    projectCategory: "Food Drive",
-    projectDescription: "Monthly food distribution to 500 families in underserved communities.",
-    targetAmount: 3000000,
-    expectedBeneficiaries: 500,
-    startDate: "2025-01-15",
-    endDate: "2025-07-15",
-    governmentIdUrl: "/placeholder.svg",
-    personalPhotoUrl: "/placeholder.svg",
-    whyApprove: "I run a small NGO focused on food security. We have partnerships with local suppliers.",
-    status: "rejected",
-    submittedAt: "2025-01-02T12:00:00Z",
-    reviewedAt: "2025-01-06T10:00:00Z",
-    rejectionReason: "Insufficient documentation provided. Please reapply with organization registration documents and detailed distribution plan.",
-  },
-  {
-    id: "app-4",
-    fullName: "Blessing Okoro",
-    email: "blessing@example.com",
-    phone: "+234 807 890 1234",
-    location: "Rivers",
-    projectTitle: "Skills Acquisition for Youth",
-    projectCategory: "Skills Training",
-    projectDescription: "Vocational training program for 150 unemployed youth in Port Harcourt. Covers tailoring, welding, and digital skills.",
-    targetAmount: 5000000,
-    expectedBeneficiaries: 150,
-    startDate: "2025-04-01",
-    endDate: "2025-10-31",
-    governmentIdUrl: "/placeholder.svg",
-    personalPhotoUrl: "/placeholder.svg",
-    whyApprove: "Youth unemployment is a major issue in our community. This program will provide practical skills that lead to employment or self-employment.",
-    trackRecord: "Ran a similar program in 2022 with 50 participants, 80% of whom found employment within 6 months.",
-    status: "pending",
-    submittedAt: "2025-01-12T09:00:00Z",
-  },
+const mockProjects: Project[] = [
+  { id: "1", name: "Clean Water Initiative Ph.2", code: "#CW-204", region: "Sub-Saharan Africa", org: "Global Future", orgInitials: "GF", orgColor: "bg-orange-500/10 text-orange-600", status: "active", progress: 65, dueDate: "Dec 20, 2024" },
+  { id: "2", name: "Rural Literacy Program", code: "#RL-882", region: "Southeast Asia", org: "EduLink Fdn.", orgInitials: "EL", orgColor: "bg-indigo-500/10 text-indigo-600", status: "at-risk", progress: 42, dueDate: "Nov 15, 2024" },
+  { id: "3", name: "Mobile Health Clinic", code: "#MH-301", region: "South America", org: "HealthForAll", orgInitials: "HA", orgColor: "bg-teal-500/10 text-teal-600", status: "completed", progress: 100, dueDate: "Oct 01, 2024" },
+  { id: "4", name: "Reforestation Zone A", code: "#RZ-110", region: "Brazil", org: "Green Earth", orgInitials: "GE", orgColor: "bg-blue-500/10 text-blue-600", status: "delayed", progress: 15, dueDate: "Jan 12, 2025" },
+  { id: "5", name: "Women's Micro-Finance", code: "#WM-554", region: "India", org: "Women's Work", orgInitials: "WW", orgColor: "bg-pink-500/10 text-pink-600", status: "active", progress: 88, dueDate: "Nov 01, 2024" },
+  { id: "6", name: "Disaster Relief Logistics", code: "#DR-901", region: "Global", org: "Rapid Cor.", orgInitials: "RC", orgColor: "bg-purple-500/10 text-purple-600", status: "draft", progress: 0, dueDate: "TBD" },
 ];
 
-const statusConfig: Record<ProjectSubmissionStatus, { label: string; icon: React.ElementType; variant: "default" | "secondary" | "destructive" | "outline" }> = {
-  pending: { label: "Pending Review", icon: Clock, variant: "outline" },
-  approved: { label: "Approved", icon: CheckCircle, variant: "default" },
-  rejected: { label: "Rejected", icon: XCircle, variant: "destructive" },
+const statusConfig: Record<ProjectStatus, { label: string; bgClass: string; textClass: string; dotClass: string }> = {
+  active: { label: "Active", bgClass: "bg-emerald-500/10", textClass: "text-emerald-700 dark:text-emerald-400", dotClass: "bg-emerald-500" },
+  "at-risk": { label: "At Risk", bgClass: "bg-amber-500/10", textClass: "text-amber-700 dark:text-amber-400", dotClass: "bg-amber-500" },
+  completed: { label: "Completed", bgClass: "bg-blue-500/10", textClass: "text-blue-700 dark:text-blue-400", dotClass: "bg-blue-500" },
+  delayed: { label: "Delayed", bgClass: "bg-red-500/10", textClass: "text-red-700 dark:text-red-400", dotClass: "bg-red-500" },
+  draft: { label: "Draft", bgClass: "bg-secondary", textClass: "text-muted-foreground", dotClass: "bg-muted-foreground" },
 };
 
-export default function ProjectReviews() {
-  const [activeTab, setActiveTab] = useState<string>("pending");
+const progressColor: Record<ProjectStatus, string> = {
+  active: "bg-primary",
+  "at-risk": "bg-amber-500",
+  completed: "bg-blue-500",
+  delayed: "bg-red-500",
+  draft: "bg-muted-foreground",
+};
+
+export default function ProjectsPage() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedApplication, setSelectedApplication] = useState<ProjectApplication | null>(null);
-  const [reviewNotes, setReviewNotes] = useState("");
-  const [reviewAction, setReviewAction] = useState<"approve" | "reject" | null>(null);
-  const [viewMode, setViewMode] = useState<"list" | "detail">("list");
-
-  const filteredApplications = mockApplications.filter((app) => {
-    const matchesTab = activeTab === "all" || app.status === activeTab;
-    const matchesSearch =
-      app.projectTitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      app.fullName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      app.email.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesTab && matchesSearch;
-  });
-
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-NG", {
-      style: "currency",
-      currency: "NGN",
-      minimumFractionDigits: 0,
-    }).format(amount);
-  };
-
-  const handleReview = (action: "approve" | "reject") => {
-    if (!selectedApplication) return;
-
-    switch (action) {
-        case "approve":
-            toast.success(`${selectedApplication.projectTitle} has been approved.`);
-            break;
-        case "reject":
-            toast.error(`${selectedApplication.projectTitle} has been rejected.`);
-            break;
-    }
-
-    setSelectedApplication(null);
-    setReviewNotes("");
-    setReviewAction(null);
-    setViewMode("list");
-  };
-
-  const getCounts = () => ({
-    all: mockApplications.length,
-    pending: mockApplications.filter((a) => a.status === "pending").length,
-    approved: mockApplications.filter((a) => a.status === "approved").length,
-    rejected: mockApplications.filter((a) => a.status === "rejected").length,
-  });
-
-  const counts = getCounts();
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [regionFilter, setRegionFilter] = useState("all");
 
   return (
-    <div className="p-6 lg:p-8">
-      <div className="mb-8">
-        <h1 className="font-display text-3xl font-bold">Project Applications</h1>
-        <p className="mt-1 text-muted-foreground">
-          Review and manage project admin applications
-        </p>
-      </div>
+    <div className="p-4 md:p-8 lg:p-10 scroll-smooth">
+      <div className="max-w-7xl mx-auto flex flex-col gap-6">
+        {/* Breadcrumbs & Heading */}
+        <div className="flex flex-col gap-6">
+          {/* Breadcrumbs */}
+          <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+            <Link href="/our-admin" className="hover:text-primary transition-colors">Home</Link>
+            <ChevronRight className="h-4 w-4" />
+            <span className="text-primary font-semibold">Projects</span>
+          </div>
 
-      {/* Search */}
-      <div className="mb-6">
-        <div className="relative max-w-md">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <Input
-            placeholder="Search by project title, name, or email..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-9"
-          />
+          {/* Header */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-extrabold text-foreground tracking-tight">Projects Directory</h2>
+              <p className="text-muted-foreground mt-2 text-lg">Manage, track, and audit all NGO initiatives across regions.</p>
+            </div>
+            <div className="flex items-center gap-3">
+              <Button variant="outline" className="gap-2">
+                <Download className="h-4 w-4" />
+                Export CSV
+              </Button>
+              <Button className="gap-2 shadow-lg shadow-primary/25">
+                <Plus className="h-4 w-4" />
+                New Project
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* Filters */}
+        <div className="bg-card p-4 rounded-xl border border-border shadow-sm flex flex-col md:flex-row gap-4 items-center justify-between">
+          <div className="relative w-full md:w-96 group">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
+            <Input
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10 h-11"
+              placeholder="Search by project name, ID, or manager..."
+            />
+          </div>
+          <div className="flex items-center gap-3 w-full md:w-auto overflow-x-auto pb-2 md:pb-0">
+            <Select value={statusFilter} onValueChange={setStatusFilter}>
+              <SelectTrigger className="w-[140px]">
+                <SelectValue placeholder="Status: All" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Status: All</SelectItem>
+                <SelectItem value="active">Active</SelectItem>
+                <SelectItem value="completed">Completed</SelectItem>
+                <SelectItem value="delayed">Delayed</SelectItem>
+                <SelectItem value="at-risk">At Risk</SelectItem>
+              </SelectContent>
+            </Select>
+            <Select value={regionFilter} onValueChange={setRegionFilter}>
+              <SelectTrigger className="w-[140px]">
+                <SelectValue placeholder="Region: All" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Region: All</SelectItem>
+                <SelectItem value="africa">Africa</SelectItem>
+                <SelectItem value="asia">Asia</SelectItem>
+                <SelectItem value="south-america">South America</SelectItem>
+                <SelectItem value="europe">Europe</SelectItem>
+              </SelectContent>
+            </Select>
+            <div className="w-px h-8 bg-border mx-1" />
+            <Button variant="outline" size="icon" title="More Filters">
+              <Filter className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+
+        {/* Table */}
+        <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse">
+              <thead className="bg-secondary/50 border-b border-border">
+                <tr>
+                  <th className="px-6 py-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider w-1/3">Project Details</th>
+                  <th className="px-6 py-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Organization</th>
+                  <th className="px-6 py-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Status</th>
+                  <th className="px-6 py-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Progress</th>
+                  <th className="px-6 py-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Due Date</th>
+                  <th className="px-6 py-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border">
+                {mockProjects.map((project) => {
+                  const status = statusConfig[project.status];
+                  return (
+                    <tr key={project.id} className="group hover:bg-secondary/30 transition-colors">
+                      <td className="px-6 py-4">
+                        <div className="flex flex-col">
+                          <span className="font-bold text-foreground text-base">{project.name}</span>
+                          <div className="flex items-center gap-2 mt-1">
+                            <span className="text-xs font-mono text-muted-foreground bg-secondary px-1.5 py-0.5 rounded">{project.code}</span>
+                            <span className="text-xs text-muted-foreground">{project.region}</span>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-3">
+                          <div className={`size-8 rounded-full ${project.orgColor} flex items-center justify-center font-bold text-xs ring-2 ring-background`}>
+                            {project.orgInitials}
+                          </div>
+                          <span className="text-sm font-medium text-foreground">{project.org}</span>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold ${status.bgClass} ${status.textClass} border border-current/20`}>
+                          <span className={`size-1.5 rounded-full ${status.dotClass}`}></span>
+                          {status.label}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 min-w-[140px]">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="text-xs font-medium text-foreground">{project.progress}%</span>
+                          {project.status === "delayed" && (
+                            <span className="text-[10px] text-red-500 font-bold">Stalled</span>
+                          )}
+                        </div>
+                        <div className="w-full bg-secondary rounded-full h-2 overflow-hidden">
+                          <div className={`${progressColor[project.status]} h-2 rounded-full`} style={{ width: `${project.progress}%` }} />
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 text-sm text-muted-foreground">{project.dueDate}</td>
+                      <td className="px-6 py-4 text-right">
+                        <Button variant="ghost" size="icon" className="rounded-full hover:bg-primary/5 hover:text-primary">
+                          <MoreVertical className="h-5 w-5" />
+                        </Button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Pagination */}
+          <div className="px-6 py-4 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p className="text-sm text-muted-foreground">
+              Showing <span className="font-medium text-foreground">1</span> to <span className="font-medium text-foreground">6</span> of <span className="font-medium text-foreground">124</span> results
+            </p>
+            <div className="flex items-center gap-2">
+              <Button variant="outline" size="sm" disabled>Previous</Button>
+              <Button size="sm">1</Button>
+              <Button variant="outline" size="sm">2</Button>
+              <Button variant="outline" size="sm">3</Button>
+              <span className="text-muted-foreground px-1">...</span>
+              <Button variant="outline" size="sm">Next</Button>
+            </div>
+          </div>
         </div>
       </div>
-
-      {/* Tabs */}
-      <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="mb-6">
-          <TabsTrigger value="pending" className="gap-2">
-            <Clock className="h-4 w-4" />
-            Pending
-            {counts.pending > 0 && (
-              <span className="ml-1 rounded-full bg-warning/20 px-2 py-0.5 text-xs font-semibold text-warning">
-                {counts.pending}
-              </span>
-            )}
-          </TabsTrigger>
-          <TabsTrigger value="approved" className="gap-2">
-            <CheckCircle className="h-4 w-4" />
-            Approved
-          </TabsTrigger>
-          <TabsTrigger value="rejected" className="gap-2">
-            <XCircle className="h-4 w-4" />
-            Rejected
-          </TabsTrigger>
-          <TabsTrigger value="all">All</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value={activeTab}>
-          {filteredApplications.length === 0 ? (
-            <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-border py-16">
-              <FileText className="mb-4 h-12 w-12 text-muted-foreground/50" />
-              <h3 className="text-lg font-semibold">No applications found</h3>
-              <p className="mt-1 text-sm text-muted-foreground">
-                {searchQuery
-                  ? "Try a different search term"
-                  : `No ${activeTab} applications at the moment`}
-              </p>
-            </div>
-          ) : (
-            <div className="space-y-4">
-              {filteredApplications.map((application) => {
-                const config = statusConfig[application.status];
-                const StatusIcon = config.icon;
-
-                return (
-                  <div
-                    key={application.id}
-                    className="rounded-xl border border-border bg-card p-6"
-                  >
-                    <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-                      <div className="flex-1">
-                        <div className="flex flex-wrap items-start gap-2">
-                          <Badge variant={config.variant} className="gap-1">
-                            <StatusIcon className="h-3 w-3" />
-                            {config.label}
-                          </Badge>
-                          <Badge variant="outline">{application.projectCategory}</Badge>
-                        </div>
-
-                        <h3 className="mt-3 font-display text-xl font-semibold">
-                          {application.projectTitle}
-                        </h3>
-
-                        <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">
-                          {application.projectDescription}
-                        </p>
-
-                        <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-sm text-muted-foreground">
-                          <div className="flex items-center gap-1">
-                            <User className="h-4 w-4" />
-                            {application.fullName}
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <Mail className="h-4 w-4" />
-                            {application.email}
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <MapPin className="h-4 w-4" />
-                            {application.location}
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <DollarSign className="h-4 w-4" />
-                            {formatCurrency(application.targetAmount)}
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <Users className="h-4 w-4" />
-                            {application.expectedBeneficiaries} beneficiaries
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <Calendar className="h-4 w-4" />
-                            {new Date(application.submittedAt).toLocaleDateString()}
-                          </div>
-                        </div>
-
-                        {application.adminNotes && (
-                          <div className="mt-4 rounded-lg bg-secondary/50 p-3">
-                            <p className="text-xs font-medium text-muted-foreground">
-                              Admin Notes:
-                            </p>
-                            <p className="mt-1 text-sm">{application.adminNotes}</p>
-                          </div>
-                        )}
-
-                        {application.rejectionReason && (
-                          <div className="mt-4 rounded-lg bg-destructive/10 p-3">
-                            <p className="text-xs font-medium text-destructive">
-                              Rejection Reason:
-                            </p>
-                            <p className="mt-1 text-sm">{application.rejectionReason}</p>
-                          </div>
-                        )}
-                      </div>
-
-                      <div className="flex gap-2 lg:flex-col">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="gap-1"
-                          onClick={() => {
-                            setSelectedApplication(application);
-                            setViewMode("detail");
-                          }}
-                        >
-                          <Eye className="h-4 w-4" />
-                          View Details
-                        </Button>
-                        {application.status === "pending" && (
-                          <>
-                            <Button
-                              size="sm"
-                              className="gap-1"
-                              onClick={() => {
-                                setSelectedApplication(application);
-                                setReviewAction("approve");
-                              }}
-                            >
-                              <CheckCircle className="h-4 w-4" />
-                              Approve
-                            </Button>
-                            <Button
-                              variant="destructive"
-                              size="sm"
-                              className="gap-1"
-                              onClick={() => {
-                                setSelectedApplication(application);
-                                setReviewAction("reject");
-                              }}
-                            >
-                              <XCircle className="h-4 w-4" />
-                              Reject
-                            </Button>
-                          </>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </TabsContent>
-      </Tabs>
-
-      {/* Review Action Dialog */}
-      <Dialog
-        open={!!selectedApplication && !!reviewAction}
-        onOpenChange={() => {
-          setSelectedApplication(null);
-          setReviewAction(null);
-          setReviewNotes("");
-        }}
-      >
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>
-              {reviewAction === "approve" ? "Approve" : "Reject"} Application
-            </DialogTitle>
-            <DialogDescription>
-              {reviewAction === "approve"
-                ? "This will grant the applicant access to their Project Admin Dashboard and make their project visible on the platform."
-                : "This will notify the applicant that their application was not approved. Please provide a reason."}
-            </DialogDescription>
-          </DialogHeader>
-
-          {selectedApplication && (
-            <div className="space-y-4">
-              <div className="rounded-lg bg-secondary/50 p-4">
-                <h4 className="font-medium">{selectedApplication.projectTitle}</h4>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  by {selectedApplication.fullName}
-                </p>
-              </div>
-
-              <div>
-                <Label htmlFor="notes">
-                  {reviewAction === "approve" ? "Notes (optional)" : "Rejection Reason *"}
-                </Label>
-                <Textarea
-                  id="notes"
-                  placeholder={
-                    reviewAction === "approve"
-                      ? "Add any notes for internal reference..."
-                      : "Explain why this application was rejected (this will be sent to the applicant)..."
-                  }
-                  value={reviewNotes}
-                  onChange={(e) => setReviewNotes(e.target.value)}
-                  className="mt-1.5"
-                />
-              </div>
-            </div>
-          )}
-
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => {
-                setSelectedApplication(null);
-                setReviewAction(null);
-                setReviewNotes("");
-              }}
-            >
-              Cancel
-            </Button>
-            <Button
-              variant={reviewAction === "approve" ? "default" : "destructive"}
-              onClick={() => handleReview(reviewAction!)}
-              disabled={reviewAction === "reject" && !reviewNotes}
-            >
-              {reviewAction === "approve" ? "Approve Application" : "Reject Application"}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-
-      {/* Full Detail View Dialog */}
-      <Dialog
-        open={!!selectedApplication && viewMode === "detail" && !reviewAction}
-        onOpenChange={() => {
-          setSelectedApplication(null);
-          setViewMode("list");
-        }}
-      >
-        <DialogContent className="max-w-3xl max-h-[90vh]">
-          <DialogHeader>
-            <DialogTitle>Application Details</DialogTitle>
-          </DialogHeader>
-
-          {selectedApplication && (
-            <ScrollArea className="max-h-[70vh] pr-4">
-              <div className="space-y-6">
-                {/* Status & Category */}
-                <div className="flex flex-wrap gap-2">
-                  <Badge variant={statusConfig[selectedApplication.status].variant} className="gap-1">
-                    {statusConfig[selectedApplication.status].label}
-                  </Badge>
-                  <Badge variant="outline">{selectedApplication.projectCategory}</Badge>
-                </div>
-
-                {/* Project Title */}
-                <div>
-                  <h3 className="font-display text-2xl font-bold">
-                    {selectedApplication.projectTitle}
-                  </h3>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    Submitted on {new Date(selectedApplication.submittedAt).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
-                  </p>
-                </div>
-
-                <Separator />
-
-                {/* Personal Details */}
-                <div>
-                  <h4 className="flex items-center gap-2 font-semibold">
-                    <User className="h-4 w-4" />
-                    Personal Details
-                  </h4>
-                  <div className="mt-3 grid gap-3 sm:grid-cols-2">
-                    <div className="space-y-1">
-                      <p className="text-xs text-muted-foreground">Full Name</p>
-                      <p className="font-medium">{selectedApplication.fullName}</p>
-                    </div>
-                    <div className="space-y-1">
-                      <p className="text-xs text-muted-foreground">Email</p>
-                      <p className="font-medium">{selectedApplication.email}</p>
-                    </div>
-                    <div className="space-y-1">
-                      <p className="text-xs text-muted-foreground">Phone</p>
-                      <p className="font-medium">{selectedApplication.phone}</p>
-                    </div>
-                    <div className="space-y-1">
-                      <p className="text-xs text-muted-foreground">Location</p>
-                      <p className="font-medium">{selectedApplication.location}</p>
-                    </div>
-                    {selectedApplication.twitterHandle && (
-                      <div className="space-y-1">
-                        <p className="text-xs text-muted-foreground">Twitter</p>
-                        <p className="font-medium">{selectedApplication.twitterHandle}</p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                <Separator />
-
-                {/* Project Details */}
-                <div>
-                  <h4 className="flex items-center gap-2 font-semibold">
-                    <FileText className="h-4 w-4" />
-                    Project Details
-                  </h4>
-                  <div className="mt-3 space-y-4">
-                    <div className="grid gap-3 sm:grid-cols-3">
-                      <div className="space-y-1">
-                        <p className="text-xs text-muted-foreground">Target Amount</p>
-                        <p className="font-medium">{formatCurrency(selectedApplication.targetAmount)}</p>
-                      </div>
-                      <div className="space-y-1">
-                        <p className="text-xs text-muted-foreground">Expected Beneficiaries</p>
-                        <p className="font-medium">{selectedApplication.expectedBeneficiaries}</p>
-                      </div>
-                      <div className="space-y-1">
-                        <p className="text-xs text-muted-foreground">Timeline</p>
-                        <p className="font-medium">
-                          {new Date(selectedApplication.startDate).toLocaleDateString()} - {new Date(selectedApplication.endDate).toLocaleDateString()}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="space-y-1">
-                      <p className="text-xs text-muted-foreground">Description</p>
-                      <p className="text-sm">{selectedApplication.projectDescription}</p>
-                    </div>
-                  </div>
-                </div>
-
-                <Separator />
-
-                {/* Identity Verification */}
-                <div>
-                  <h4 className="flex items-center gap-2 font-semibold">
-                    <Shield className="h-4 w-4" />
-                    Identity Verification
-                  </h4>
-                  <div className="mt-3 grid gap-4 sm:grid-cols-2">
-                    <div className="rounded-lg border border-border p-3">
-                      <p className="text-xs text-muted-foreground">Government ID</p>
-                      <div className="mt-2 flex items-center gap-2">
-                        <ImageIcon className="h-4 w-4 text-muted-foreground" />
-                        <span className="text-sm">Document uploaded</span>
-                        <Button variant="link" size="sm" className="h-auto p-0">
-                          View
-                        </Button>
-                      </div>
-                    </div>
-                    <div className="rounded-lg border border-border p-3">
-                      <p className="text-xs text-muted-foreground">Personal Photo</p>
-                      <div className="mt-2 flex items-center gap-2">
-                        <ImageIcon className="h-4 w-4 text-muted-foreground" />
-                        <span className="text-sm">Photo uploaded</span>
-                        <Button variant="link" size="sm" className="h-auto p-0">
-                          View
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                  {selectedApplication.supportingDocuments && selectedApplication.supportingDocuments.length > 0 && (
-                    <div className="mt-3 space-y-2">
-                      <p className="text-xs text-muted-foreground">Supporting Documents</p>
-                      {selectedApplication.supportingDocuments.map((doc, index) => (
-                        <div key={index} className="flex items-center gap-2 rounded bg-secondary px-3 py-2 text-sm">
-                          <FileText className="h-4 w-4" />
-                          <span>{doc}</span>
-                          <Button variant="link" size="sm" className="ml-auto h-auto p-0">
-                            Download
-                          </Button>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-
-                <Separator />
-
-                {/* Why Approve */}
-                <div>
-                  <h4 className="flex items-center gap-2 font-semibold">
-                    <CheckCircle className="h-4 w-4" />
-                    Why This Project Should Be Approved
-                  </h4>
-                  <div className="mt-3 space-y-4">
-                    <div className="space-y-1">
-                      <p className="text-xs text-muted-foreground">Applicant&apos;s Case</p>
-                      <p className="text-sm">{selectedApplication.whyApprove}</p>
-                    </div>
-                    {selectedApplication.trackRecord && (
-                      <div className="space-y-1">
-                        <p className="text-xs text-muted-foreground">Track Record</p>
-                        <p className="text-sm">{selectedApplication.trackRecord}</p>
-                      </div>
-                    )}
-                    {selectedApplication.previousWorkLinks && selectedApplication.previousWorkLinks.length > 0 && (
-                      <div className="space-y-1">
-                        <p className="text-xs text-muted-foreground">Previous Work Links</p>
-                        <div className="space-y-1">
-                          {selectedApplication.previousWorkLinks.map((link, index) => (
-                            <a
-                              key={index}
-                              href={link}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex items-center gap-1 text-sm text-primary hover:underline"
-                            >
-                              <LinkIcon className="h-3 w-3" />
-                              {link}
-                            </a>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {/* Action Buttons for Pending Applications */}
-                {selectedApplication.status === "pending" && (
-                  <>
-                    <Separator />
-                    <div className="flex gap-3">
-                      <Button
-                        className="flex-1 gap-1"
-                        onClick={() => setReviewAction("approve")}
-                      >
-                        <CheckCircle className="h-4 w-4" />
-                        Approve Application
-                      </Button>
-                      <Button
-                        variant="destructive"
-                        className="flex-1 gap-1"
-                        onClick={() => setReviewAction("reject")}
-                      >
-                        <XCircle className="h-4 w-4" />
-                        Reject Application
-                      </Button>
-                    </div>
-                  </>
-                )}
-              </div>
-            </ScrollArea>
-          )}
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }
