@@ -1,12 +1,12 @@
 "use client"
 
-import Link from "next/link";
+import Link from "next/link"
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { usePathname } from "next/navigation";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -16,11 +16,11 @@ const navLinks = [
 ];
 
 export function Navbar() {
-  const pathname = usePathname();
+  const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/80 backdrop-blur-xl md:px-30 sm:px-10 px-5">
+    <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/80 backdrop-blur-xl">
       <div className="container flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
@@ -79,7 +79,7 @@ export function Navbar() {
                 href={link.href}
                 className={cn(
                   "rounded-lg px-4 py-2 text-sm font-medium transition-colors",
-                  pathname === link.href
+                  location.pathname === link.href
                     ? "bg-secondary text-foreground"
                     : "text-muted-foreground hover:bg-secondary"
                 )}

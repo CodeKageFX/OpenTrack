@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-// import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -15,7 +14,24 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ArrowLeft, Upload, CheckCircle, FileText, User, Briefcase, Shield, X } from "lucide-react";
+import {
+  CheckCircle,
+  Upload,
+  X,
+  Save,
+  HelpCircle,
+  BadgeCheck,
+  Flag,
+  Users,
+  Calendar,
+  Gavel,
+  User,
+  Bold,
+  Italic,
+  List,
+  Link2,
+  ShieldCheck,
+} from "lucide-react";
 import { toast } from "sonner";
 
 const categories = [
@@ -31,6 +47,16 @@ const categories = [
   "Other",
 ];
 
+const demographics = [
+  "Children & Youth",
+  "Women & Girls",
+  "Refugees",
+  "Elderly",
+  "Disabled Persons",
+  "Students",
+  "General Population",
+];
+
 const nigerianStates = [
   "Abia", "Adamawa", "Akwa Ibom", "Anambra", "Bauchi", "Bayelsa", "Benue", "Borno",
   "Cross River", "Delta", "Ebonyi", "Edo", "Ekiti", "Enugu", "FCT", "Gombe",
@@ -40,147 +66,84 @@ const nigerianStates = [
 ];
 
 interface FormData {
-  // Personal Details
   fullName: string;
-  email: string;
-  phone: string;
-  twitterHandle: string;
-  location: string;
-  // Project Details
+  orgRegNumber: string;
   projectTitle: string;
   projectCategory: string;
-  projectDescription: string;
-  targetAmount: string;
-  expectedBeneficiaries: string;
+  problemStatement: string;
+  estimatedBeneficiaries: string;
+  primaryDemographic: string;
   startDate: string;
   endDate: string;
-  // Uploads
-  governmentId: File | null;
-  personalPhoto: File | null;
-  supportingDocs: File[];
-  // Why Approve
-  whyApprove: string;
-  trackRecord: string;
-  previousWorkLinks: string;
-  // Agreements
-  agreedTransparency: boolean;
-  agreedProofUpload: boolean;
-  agreedRevokeAccess: boolean;
-  agreedDonationResponsibility: boolean;
+  location: string;
+  agreedOpenData: boolean;
+  registrationDoc: File | null;
 }
 
+const steps = [
+  { id: 1, title: "Identity Verification", icon: BadgeCheck },
+  { id: 2, title: "Project Mission", icon: Flag },
+  { id: 3, title: "Beneficiary Targets", icon: Users },
+  { id: 4, title: "Timeline", icon: Calendar },
+  { id: 5, title: "Transparency Agreement", icon: Gavel },
+];
+
 export default function CreateProject() {
-  // const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<FormData>({
     fullName: "",
-    email: "",
-    phone: "",
-    twitterHandle: "",
-    location: "",
+    orgRegNumber: "",
     projectTitle: "",
     projectCategory: "",
-    projectDescription: "",
-    targetAmount: "",
-    expectedBeneficiaries: "",
+    problemStatement: "",
+    estimatedBeneficiaries: "",
+    primaryDemographic: "",
     startDate: "",
     endDate: "",
-    governmentId: null,
-    personalPhoto: null,
-    supportingDocs: [],
-    whyApprove: "",
-    trackRecord: "",
-    previousWorkLinks: "",
-    agreedTransparency: false,
-    agreedProofUpload: false,
-    agreedRevokeAccess: false,
-    agreedDonationResponsibility: false,
+    location: "",
+    agreedOpenData: false,
+    registrationDoc: null,
   });
 
   const updateField = <K extends keyof FormData>(field: K, value: FormData[K]) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const validateStep = (step: number): boolean => {
-    switch (step) {
-      case 1:
-        if (!formData.fullName || !formData.email || !formData.phone || !formData.location) {
-          toast.error("Please fill in all required personal details.");
-          return false;
-        }
-        return true;
-      case 2:
-        if (!formData.projectTitle || !formData.projectCategory || !formData.projectDescription || !formData.targetAmount || !formData.expectedBeneficiaries || !formData.startDate || !formData.endDate) {
-          toast.error("Please fill in all required project details.");
-          return false;
-        }
-        return true;
-      case 3:
-        if (!formData.governmentId || !formData.personalPhoto) {
-          toast.error("Please upload your Government ID and personal photo.");
-          return false;
-        }
-        return true;
-      case 4:
-        if (!formData.whyApprove) {
-          toast.error("Please explain why your project should be approved.");
-          return false;
-        }
-        return true;
-      case 5:
-        if (!formData.agreedTransparency || !formData.agreedProofUpload || !formData.agreedRevokeAccess || !formData.agreedDonationResponsibility) {
-          toast("Please agree to all terms before submitting.");
-          return false;
-        }
-        return true;
-      default:
-        return true;
-    }
-  };
-
-  const handleNext = () => {
-    if (validateStep(currentStep)) {
-      setCurrentStep((prev) => Math.min(prev + 1, 5));
-    }
-  };
-
-  const handleBack = () => {
-    setCurrentStep((prev) => Math.max(prev - 1, 1));
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validateStep(5)) return;
-
+    if (!formData.agreedOpenData) {
+      toast.error("Please agree to the Open Data Standards before submitting.");
+      return;
+    }
     setIsSubmitting(true);
     await new Promise((resolve) => setTimeout(resolve, 2000));
     setIsSubmitting(false);
     setIsSubmitted(true);
   };
 
-  const handleFileUpload = (field: "governmentId" | "personalPhoto", file: File | null) => {
-    updateField(field, file);
-  };
-
-  const handleSupportingDocsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      updateField("supportingDocs", [...formData.supportingDocs, ...Array.from(e.target.files)]);
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files?.[0]) {
+      updateField("registrationDoc", e.target.files[0]);
     }
   };
 
-  const removeSupportingDoc = (index: number) => {
-    updateField("supportingDocs", formData.supportingDocs.filter((_, i) => i !== index));
-  };
-
-  const steps = [
-    { number: 1, title: "Personal Details", icon: User },
-    { number: 2, title: "Project Details", icon: Briefcase },
-    { number: 3, title: "Identity Verification", icon: FileText },
-    { number: 4, title: "Why Approve", icon: CheckCircle },
-    { number: 5, title: "Agreements", icon: Shield },
-  ];
+  const completionPercentage = Math.round(
+    ((formData.fullName ? 1 : 0) +
+      (formData.orgRegNumber ? 1 : 0) +
+      (formData.projectTitle ? 1 : 0) +
+      (formData.projectCategory ? 1 : 0) +
+      (formData.problemStatement ? 1 : 0) +
+      (formData.estimatedBeneficiaries ? 1 : 0) +
+      (formData.primaryDemographic ? 1 : 0) +
+      (formData.startDate ? 1 : 0) +
+      (formData.endDate ? 1 : 0) +
+      (formData.agreedOpenData ? 1 : 0) +
+      (formData.registrationDoc ? 1 : 0)) /
+      11 *
+      100
+  );
 
   if (isSubmitted) {
     return (
@@ -194,19 +157,19 @@ export default function CreateProject() {
             <p className="mt-4 text-muted-foreground">
               Your project application is now under review. Our team will verify your details and documents.
             </p>
-            
+
             <div className="mt-8 rounded-xl border border-border bg-card p-6 text-left">
               <h2 className="font-semibold">Application Status</h2>
               <div className="mt-4 flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-warning/20">
-                  <div className="h-3 w-3 animate-pulse rounded-full bg-warning" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber-500/20">
+                  <div className="h-3 w-3 animate-pulse rounded-full bg-amber-500" />
                 </div>
                 <div>
                   <p className="font-medium">Pending Review</p>
                   <p className="text-sm text-muted-foreground">Estimated review time: 2-3 business days</p>
                 </div>
               </div>
-              
+
               <div className="mt-6 space-y-3 text-sm">
                 <h3 className="font-medium">What happens next?</h3>
                 <ol className="list-inside list-decimal space-y-2 text-muted-foreground">
@@ -217,10 +180,6 @@ export default function CreateProject() {
                 </ol>
               </div>
             </div>
-
-            <p className="mt-6 text-sm text-muted-foreground">
-              A confirmation email has been sent to <span className="font-medium text-foreground">{formData.email}</span>
-            </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
               <Button variant="outline" asChild>
@@ -237,116 +196,318 @@ export default function CreateProject() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-background">
-      <main className="flex-1 py-8 md:py-12">
-        <div className="container max-w-3xl">
-          <Button variant="ghost" asChild className="mb-6 gap-2">
-            <Link href="/projects">
-              <ArrowLeft className="h-4 w-4" />
-              Back to Projects
+    <div className="min-h-screen bg-background font-display antialiased flex flex-col">
+      {/* Top Navigation */}
+      <header className="sticky top-0 z-50 bg-background/90 backdrop-blur-md border-b border-border h-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
+          <div className="flex items-center justify-between h-full">
+            {/* Logo & Brand */}
+            <Link href="/" className="flex items-center gap-3">
+              <div className="flex items-center justify-center size-8 bg-gradient-to-br from-primary to-primary/70 rounded-lg text-primary-foreground shadow-lg shadow-primary/20">
+                <ShieldCheck className="h-5 w-5" />
+              </div>
+              <div className="flex flex-col">
+                <h1 className="text-lg font-bold tracking-tight text-foreground leading-none">OpenTrack</h1>
+                <span className="text-[10px] font-semibold text-primary uppercase tracking-wider">Admin Portal</span>
+              </div>
             </Link>
-          </Button>
 
-          {/* Progress Steps */}
-          <div className="mb-8 overflow-x-auto">
-            <div className="flex min-w-max justify-between gap-2">
-              {steps.map((step, index) => {
-                const StepIcon = step.icon;
-                const isActive = currentStep === step.number;
-                const isCompleted = currentStep > step.number;
-
-                return (
-                  <div key={step.number} className="flex flex-1 items-center">
-                    <div className="flex flex-col items-center">
-                      <div
-                        className={`flex h-10 w-10 items-center justify-center rounded-full border-2 transition-colors ${
-                          isActive
-                            ? "border-primary bg-primary text-primary-foreground"
-                            : isCompleted
-                            ? "border-primary bg-primary text-primary-foreground"
-                            : "border-border bg-background text-muted-foreground"
-                        }`}
-                      >
-                        {isCompleted ? <CheckCircle className="h-5 w-5" /> : <StepIcon className="h-5 w-5" />}
-                      </div>
-                      <span className={`mt-2 text-xs font-medium ${isActive || isCompleted ? "text-foreground" : "text-muted-foreground"}`}>
-                        {step.title}
-                      </span>
-                    </div>
-                    {index < steps.length - 1 && (
-                      <div className={`mx-2 h-0.5 flex-1 ${isCompleted ? "bg-primary" : "bg-border"}`} />
-                    )}
-                  </div>
-                );
-              })}
+            {/* Actions */}
+            <div className="flex items-center gap-4">
+              <div className="hidden md:flex items-center gap-3">
+                <span className="text-xs font-medium text-muted-foreground">Auto-saved</span>
+                <Button variant="secondary" size="sm" className="gap-2">
+                  <Save className="h-4 w-4" />
+                  Save Draft
+                </Button>
+              </div>
+              <div className="h-6 w-px bg-border mx-2 hidden md:block" />
+              <Button variant="ghost" size="icon" className="rounded-full">
+                <HelpCircle className="h-5 w-5" />
+              </Button>
+              <div className="size-9 rounded-full bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center text-primary-foreground font-bold text-sm shadow-sm">
+                U
+              </div>
             </div>
           </div>
+        </div>
+      </header>
 
-          <div className="rounded-xl border border-border bg-card p-6 md:p-8">
-            <div className="mb-8">
-              <h1 className="font-display text-2xl font-bold md:text-3xl">Project Admin Application</h1>
-              <p className="mt-2 text-muted-foreground">
-                Apply to become a project admin and start receiving donations for your cause.
-              </p>
+      {/* Main Layout */}
+      <div className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          {/* Sidebar / Progress Stepper */}
+          <aside className="hidden lg:block lg:col-span-3 sticky top-24">
+            <nav className="flex flex-col gap-6">
+              <div>
+                <h2 className="text-sm font-bold text-foreground uppercase tracking-wider mb-1">Application</h2>
+                <p className="text-xs text-muted-foreground">Complete all required sections</p>
+              </div>
+
+              <div className="flex flex-col gap-2 relative">
+                {/* Connecting Line */}
+                <div className="absolute left-[19px] top-4 bottom-4 w-0.5 bg-border -z-10" />
+
+                {steps.map((step) => {
+                  const isActive = currentStep === step.id;
+                  const isCompleted = currentStep > step.id;
+                  const StepIcon = step.icon;
+
+                  return (
+                    <button
+                      key={step.id}
+                      onClick={() => setCurrentStep(step.id)}
+                      className={`group flex items-center gap-3 p-2 rounded-lg transition-all text-left ${
+                        isActive
+                          ? "bg-card shadow-sm border border-border"
+                          : "hover:bg-secondary opacity-70 hover:opacity-100"
+                      }`}
+                    >
+                      <div
+                        className={`relative flex items-center justify-center size-8 rounded-full z-10 ${
+                          isActive
+                            ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20 ring-2 ring-background"
+                            : isCompleted
+                            ? "bg-primary text-primary-foreground"
+                            : "bg-secondary text-muted-foreground border border-border"
+                        }`}
+                      >
+                        {isCompleted ? (
+                          <CheckCircle className="h-4 w-4" />
+                        ) : (
+                          <StepIcon className="h-4 w-4" />
+                        )}
+                      </div>
+                      <div className="flex flex-col">
+                        <span className={`text-sm ${isActive ? "font-bold text-primary" : "font-medium text-foreground"}`}>
+                          {step.title}
+                        </span>
+                        {isActive && <span className="text-[10px] text-muted-foreground">In Progress</span>}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </nav>
+          </aside>
+
+          {/* Main Form Area */}
+          <main className="lg:col-span-9 flex flex-col gap-6">
+            {/* Page Heading */}
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-2 border-b border-border">
+              <div>
+                <h2 className="text-3xl font-black text-foreground tracking-tight mb-2">New Project Application</h2>
+                <div className="flex items-center gap-2">
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">
+                    Draft
+                  </span>
+                  <span className="text-muted-foreground text-sm">Step {currentStep} of 5</span>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-muted-foreground">Completion</span>
+                <div className="w-24 h-2 bg-secondary rounded-full overflow-hidden">
+                  <div className="h-full bg-primary rounded-full transition-all duration-300" style={{ width: `${completionPercentage}%` }} />
+                </div>
+                <span className="text-xs font-bold text-foreground">{completionPercentage}%</span>
+              </div>
             </div>
 
-            <form onSubmit={handleSubmit}>
-              {/* Step 1: Personal Details */}
-              {currentStep === 1 && (
-                <div className="space-y-6 animate-fade-in">
-                  <h2 className="flex items-center gap-2 text-lg font-semibold">
-                    <User className="h-5 w-5" />
-                    Personal Details
-                  </h2>
+            <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+              {/* Form Section 1: Identity Verification */}
+              <div className="bg-card rounded-xl shadow-sm border border-border overflow-hidden">
+                <div className="p-6 md:p-8 border-b border-border">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="p-2 bg-primary/10 rounded-lg text-primary">
+                      <BadgeCheck className="h-5 w-5" />
+                    </div>
+                    <h3 className="text-xl font-bold text-foreground">1. Identity Verification</h3>
+                  </div>
 
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <div>
-                      <Label htmlFor="fullName">Full Name *</Label>
-                      <Input
-                        id="fullName"
-                        placeholder="Your full legal name"
-                        value={formData.fullName}
-                        onChange={(e) => updateField("fullName", e.target.value)}
-                        className="mt-1.5"
-                      />
+                  <div className="space-y-8">
+                    {/* File Upload Area */}
+                    <div className="w-full">
+                      <Label className="block text-sm font-bold text-foreground mb-2">
+                        Organization Registration Document
+                      </Label>
+                      <label className="relative group flex flex-col items-center justify-center w-full h-48 rounded-xl border-2 border-dashed border-border bg-secondary/50 hover:bg-secondary hover:border-primary/50 transition-all cursor-pointer">
+                        {formData.registrationDoc ? (
+                          <div className="flex flex-col items-center text-center">
+                            <div className="p-3 bg-primary/10 rounded-full mb-3">
+                              <CheckCircle className="h-6 w-6 text-primary" />
+                            </div>
+                            <p className="text-sm font-medium text-foreground">{formData.registrationDoc.name}</p>
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                updateField("registrationDoc", null);
+                              }}
+                              className="mt-2 text-xs text-destructive hover:underline flex items-center gap-1"
+                            >
+                              <X className="h-3 w-3" /> Remove
+                            </button>
+                          </div>
+                        ) : (
+                          <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                            <div className="p-3 bg-card rounded-full shadow-sm mb-3 group-hover:scale-110 transition-transform">
+                              <Upload className="h-8 w-8 text-primary" />
+                            </div>
+                            <p className="mb-1 text-sm text-muted-foreground font-medium">
+                              <span className="text-primary hover:underline">Click to upload</span> or drag and drop
+                            </p>
+                            <p className="text-xs text-muted-foreground">PDF, JPG or PNG (MAX. 10MB)</p>
+                          </div>
+                        )}
+                        <input type="file" accept=".pdf,.jpg,.jpeg,.png" onChange={handleFileChange} className="hidden" />
+                      </label>
                     </div>
-                    <div>
-                      <Label htmlFor="email">Email Address *</Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        placeholder="you@example.com"
-                        value={formData.email}
-                        onChange={(e) => updateField("email", e.target.value)}
-                        className="mt-1.5"
-                      />
+
+                    {/* Text Fields Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <Label className="text-sm font-bold text-foreground mb-1.5 block">Full Legal Name</Label>
+                        <Input
+                          value={formData.fullName}
+                          onChange={(e) => updateField("fullName", e.target.value)}
+                          className="h-12 px-4 shadow-sm"
+                          placeholder="e.g. John Doe"
+                        />
+                        <span className="text-xs text-muted-foreground mt-1 block">As it appears on your government ID</span>
+                      </div>
+                      <div>
+                        <Label className="text-sm font-bold text-foreground mb-1.5 block">Organization Reg. Number</Label>
+                        <Input
+                          value={formData.orgRegNumber}
+                          onChange={(e) => updateField("orgRegNumber", e.target.value)}
+                          className="h-12 px-4 shadow-sm"
+                          placeholder="e.g. NGO-88291-X"
+                        />
+                      </div>
                     </div>
-                    <div>
-                      <Label htmlFor="phone">Phone Number *</Label>
-                      <Input
-                        id="phone"
-                        type="tel"
-                        placeholder="+234 800 000 0000"
-                        value={formData.phone}
-                        onChange={(e) => updateField("phone", e.target.value)}
-                        className="mt-1.5"
-                      />
+                  </div>
+                </div>
+              </div>
+
+              {/* Form Section 2: Project Mission */}
+              <div className="bg-card rounded-xl shadow-sm border border-border overflow-hidden">
+                <div className="p-6 border-b border-border bg-secondary/30">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 bg-secondary rounded-lg text-muted-foreground">
+                        <Flag className="h-5 w-5" />
+                      </div>
+                      <h3 className="text-lg font-bold text-foreground">2. Project Mission</h3>
                     </div>
-                    <div>
-                      <Label htmlFor="twitterHandle">X (Twitter) Handle</Label>
-                      <Input
-                        id="twitterHandle"
-                        placeholder="@yourhandle"
-                        value={formData.twitterHandle}
-                        onChange={(e) => updateField("twitterHandle", e.target.value)}
-                        className="mt-1.5"
-                      />
+                  </div>
+
+                  <div className="mt-6 space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <Label className="text-sm font-bold text-foreground mb-1.5 block">Project Title</Label>
+                        <Input
+                          value={formData.projectTitle}
+                          onChange={(e) => updateField("projectTitle", e.target.value)}
+                          className="h-12 px-4 shadow-sm"
+                          placeholder="Enter concise project title"
+                        />
+                      </div>
+                      <div>
+                        <Label className="text-sm font-bold text-foreground mb-1.5 block">Project Category</Label>
+                        <Select value={formData.projectCategory} onValueChange={(value) => updateField("projectCategory", value)}>
+                          <SelectTrigger className="h-12 px-4 shadow-sm">
+                            <SelectValue placeholder="Select a category..." />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {categories.map((cat) => (
+                              <SelectItem key={cat} value={cat}>
+                                {cat}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
                     </div>
-                    <div className="sm:col-span-2">
-                      <Label htmlFor="location">State *</Label>
+
+                    <div>
+                      <Label className="text-sm font-bold text-foreground mb-1.5 block">Problem Statement</Label>
+                      <div className="w-full rounded-lg border border-border bg-card overflow-hidden shadow-sm">
+                        {/* Toolbar */}
+                        <div className="flex items-center gap-1 p-2 bg-secondary/50 border-b border-border">
+                          <button type="button" className="p-1.5 rounded hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors">
+                            <Bold className="h-4 w-4" />
+                          </button>
+                          <button type="button" className="p-1.5 rounded hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors">
+                            <Italic className="h-4 w-4" />
+                          </button>
+                          <button type="button" className="p-1.5 rounded hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors">
+                            <List className="h-4 w-4" />
+                          </button>
+                          <div className="w-px h-4 bg-border mx-1" />
+                          <button type="button" className="p-1.5 rounded hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors">
+                            <Link2 className="h-4 w-4" />
+                          </button>
+                        </div>
+                        <Textarea
+                          value={formData.problemStatement}
+                          onChange={(e) => updateField("problemStatement", e.target.value)}
+                          className="w-full border-none p-4 bg-transparent focus-visible:ring-0 min-h-32 resize-y"
+                          placeholder="Describe the core problem your project addresses..."
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Form Section 3: Beneficiary Targets */}
+              <div className="bg-card rounded-xl shadow-sm border border-border overflow-hidden">
+                <div className="p-6 md:p-8">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="p-2 bg-secondary rounded-lg text-muted-foreground">
+                      <Users className="h-5 w-5" />
+                    </div>
+                    <h3 className="text-xl font-bold text-foreground">3. Beneficiary Targets</h3>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="relative">
+                      <Label className="text-sm font-bold text-foreground mb-1.5 block">Estimated Beneficiaries</Label>
+                      <div className="relative">
+                        <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-muted-foreground">
+                          <User className="h-5 w-5" />
+                        </span>
+                        <Input
+                          type="number"
+                          value={formData.estimatedBeneficiaries}
+                          onChange={(e) => updateField("estimatedBeneficiaries", e.target.value)}
+                          className="h-12 pl-10 pr-4 shadow-sm"
+                          placeholder="0"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <Label className="text-sm font-bold text-foreground mb-1.5 block">Primary Demographic</Label>
+                      <Select value={formData.primaryDemographic} onValueChange={(value) => updateField("primaryDemographic", value)}>
+                        <SelectTrigger className="h-12 px-4 shadow-sm">
+                          <SelectValue placeholder="Select a demographic..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {demographics.map((demo) => (
+                            <SelectItem key={demo} value={demo}>
+                              {demo}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="md:col-span-2">
+                      <Label className="text-sm font-bold text-foreground mb-1.5 block">Location (State)</Label>
                       <Select value={formData.location} onValueChange={(value) => updateField("location", value)}>
-                        <SelectTrigger className="mt-1.5">
-                          <SelectValue placeholder="Select your state" />
+                        <SelectTrigger className="h-12 px-4 shadow-sm">
+                          <SelectValue placeholder="Select state..." />
                         </SelectTrigger>
                         <SelectContent>
                           {nigerianStates.map((state) => (
@@ -359,372 +520,107 @@ export default function CreateProject() {
                     </div>
                   </div>
                 </div>
-              )}
-
-              {/* Step 2: Project Details */}
-              {currentStep === 2 && (
-                <div className="space-y-6 animate-fade-in">
-                  <h2 className="flex items-center gap-2 text-lg font-semibold">
-                    <Briefcase className="h-5 w-5" />
-                    Project Details
-                  </h2>
-
-                  <div className="space-y-4">
-                    <div>
-                      <Label htmlFor="projectTitle">Project Title *</Label>
-                      <Input
-                        id="projectTitle"
-                        placeholder="e.g., Tech Empowerment Lagos 2025"
-                        value={formData.projectTitle}
-                        onChange={(e) => updateField("projectTitle", e.target.value)}
-                        className="mt-1.5"
-                      />
-                    </div>
-
-                    <div className="grid gap-4 sm:grid-cols-2">
-                      <div>
-                        <Label htmlFor="projectCategory">Project Category *</Label>
-                        <Select value={formData.projectCategory} onValueChange={(value) => updateField("projectCategory", value)}>
-                          <SelectTrigger className="mt-1.5">
-                            <SelectValue placeholder="Select category" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {categories.map((cat) => (
-                              <SelectItem key={cat} value={cat}>
-                                {cat}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div>
-                        <Label htmlFor="targetAmount">Target Amount (₦) *</Label>
-                        <Input
-                          id="targetAmount"
-                          type="number"
-                          placeholder="e.g., 5000000"
-                          value={formData.targetAmount}
-                          onChange={(e) => updateField("targetAmount", e.target.value)}
-                          className="mt-1.5"
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <Label htmlFor="projectDescription">Full Project Description *</Label>
-                      <Textarea
-                        id="projectDescription"
-                        placeholder="Describe your project in detail: what you need donations for, who will benefit, how the items/funds will be distributed..."
-                        value={formData.projectDescription}
-                        onChange={(e) => updateField("projectDescription", e.target.value)}
-                        className="mt-1.5 min-h-[150px]"
-                      />
-                    </div>
-
-                    <div className="grid gap-4 sm:grid-cols-3">
-                      <div>
-                        <Label htmlFor="expectedBeneficiaries">Expected Beneficiaries *</Label>
-                        <Input
-                          id="expectedBeneficiaries"
-                          type="number"
-                          placeholder="e.g., 100"
-                          value={formData.expectedBeneficiaries}
-                          onChange={(e) => updateField("expectedBeneficiaries", e.target.value)}
-                          className="mt-1.5"
-                        />
-                      </div>
-                      <div>
-                        <Label htmlFor="startDate">Start Date *</Label>
-                        <Input
-                          id="startDate"
-                          type="date"
-                          value={formData.startDate}
-                          onChange={(e) => updateField("startDate", e.target.value)}
-                          className="mt-1.5"
-                        />
-                      </div>
-                      <div>
-                        <Label htmlFor="endDate">End Date *</Label>
-                        <Input
-                          id="endDate"
-                          type="date"
-                          value={formData.endDate}
-                          onChange={(e) => updateField("endDate", e.target.value)}
-                          className="mt-1.5"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Step 3: Identity Verification */}
-              {currentStep === 3 && (
-                <div className="space-y-6 animate-fade-in">
-                  <h2 className="flex items-center gap-2 text-lg font-semibold">
-                    <FileText className="h-5 w-5" />
-                    Proof of Identity
-                  </h2>
-                  <p className="text-sm text-muted-foreground">
-                    Upload documents to verify your identity. This helps us ensure the authenticity of project admins.
-                  </p>
-
-                  <div className="grid gap-6 sm:grid-cols-2">
-                    {/* Government ID */}
-                    <div>
-                      <Label>Government ID *</Label>
-                      <p className="mb-2 text-xs text-muted-foreground">NIN, Driver&apos;s License, or International Passport</p>
-                      <label className="flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-border p-6 transition-colors hover:border-foreground/30 hover:bg-secondary/50">
-                        {formData.governmentId ? (
-                          <div className="text-center">
-                            <CheckCircle className="mx-auto mb-2 h-8 w-8 text-primary" />
-                            <span className="text-sm font-medium">{formData.governmentId.name}</span>
-                            <button
-                              type="button"
-                              onClick={(e) => { e.preventDefault(); handleFileUpload("governmentId", null); }}
-                              className="mt-2 text-xs text-destructive hover:underline"
-                            >
-                              Remove
-                            </button>
-                          </div>
-                        ) : (
-                          <>
-                            <Upload className="mb-2 h-8 w-8 text-muted-foreground" />
-                            <span className="text-sm font-medium">Click to upload</span>
-                            <span className="mt-1 text-xs text-muted-foreground">PNG, JPG, or PDF</span>
-                          </>
-                        )}
-                        <input
-                          type="file"
-                          accept=".png,.jpg,.jpeg,.pdf"
-                          onChange={(e) => handleFileUpload("governmentId", e.target.files?.[0] || null)}
-                          className="hidden"
-                        />
-                      </label>
-                    </div>
-
-                    {/* Personal Photo */}
-                    <div>
-                      <Label>Personal Photo *</Label>
-                      <p className="mb-2 text-xs text-muted-foreground">A clear photo of yourself</p>
-                      <label className="flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-border p-6 transition-colors hover:border-foreground/30 hover:bg-secondary/50">
-                        {formData.personalPhoto ? (
-                          <div className="text-center">
-                            <CheckCircle className="mx-auto mb-2 h-8 w-8 text-primary" />
-                            <span className="text-sm font-medium">{formData.personalPhoto.name}</span>
-                            <button
-                              type="button"
-                              onClick={(e) => { e.preventDefault(); handleFileUpload("personalPhoto", null); }}
-                              className="mt-2 text-xs text-destructive hover:underline"
-                            >
-                              Remove
-                            </button>
-                          </div>
-                        ) : (
-                          <>
-                            <Upload className="mb-2 h-8 w-8 text-muted-foreground" />
-                            <span className="text-sm font-medium">Click to upload</span>
-                            <span className="mt-1 text-xs text-muted-foreground">PNG or JPG</span>
-                          </>
-                        )}
-                        <input
-                          type="file"
-                          accept=".png,.jpg,.jpeg"
-                          onChange={(e) => handleFileUpload("personalPhoto", e.target.files?.[0] || null)}
-                          className="hidden"
-                        />
-                      </label>
-                    </div>
-                  </div>
-
-                  {/* Supporting Documents */}
-                  <div>
-                    <Label>Supporting Documents (Optional)</Label>
-                    <p className="mb-2 text-xs text-muted-foreground">
-                      Proposals, budgets, organization registration, or any relevant documents
-                    </p>
-                    <label className="flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-border p-6 transition-colors hover:border-foreground/30 hover:bg-secondary/50">
-                      <Upload className="mb-2 h-8 w-8 text-muted-foreground" />
-                      <span className="text-sm font-medium">Click to upload files</span>
-                      <span className="mt-1 text-xs text-muted-foreground">PDF, DOC, or images up to 10MB each</span>
-                      <input
-                        type="file"
-                        multiple
-                        accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"
-                        onChange={handleSupportingDocsChange}
-                        className="hidden"
-                      />
-                    </label>
-
-                    {formData.supportingDocs.length > 0 && (
-                      <div className="mt-3 space-y-2">
-                        {formData.supportingDocs.map((file, index) => (
-                          <div key={index} className="flex items-center justify-between rounded-lg bg-secondary px-3 py-2 text-sm">
-                            <span className="truncate">{file.name}</span>
-                            <button
-                              type="button"
-                              onClick={() => removeSupportingDoc(index)}
-                              className="ml-2 text-muted-foreground hover:text-foreground"
-                            >
-                              <X className="h-4 w-4" />
-                            </button>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
-
-              {/* Step 4: Why Should This Be Approved */}
-              {currentStep === 4 && (
-                <div className="space-y-6 animate-fade-in">
-                  <h2 className="flex items-center gap-2 text-lg font-semibold">
-                    <CheckCircle className="h-5 w-5" />
-                    Why Should This Project Be Approved?
-                  </h2>
-
-                  <div className="space-y-4">
-                    <div>
-                      <Label htmlFor="whyApprove">Make Your Case *</Label>
-                      <p className="mb-2 text-xs text-muted-foreground">
-                        Explain why your project should be approved. What impact will it have?
-                      </p>
-                      <Textarea
-                        id="whyApprove"
-                        placeholder="Tell us about the need for this project, the community you'll serve, and the impact you expect to make..."
-                        value={formData.whyApprove}
-                        onChange={(e) => updateField("whyApprove", e.target.value)}
-                        className="min-h-[120px]"
-                      />
-                    </div>
-
-                    <div>
-                      <Label htmlFor="trackRecord">Track Record / Experience (Optional)</Label>
-                      <p className="mb-2 text-xs text-muted-foreground">
-                        Have you organized similar projects before? Share your experience.
-                      </p>
-                      <Textarea
-                        id="trackRecord"
-                        placeholder="Describe any previous projects, community work, or relevant experience..."
-                        value={formData.trackRecord}
-                        onChange={(e) => updateField("trackRecord", e.target.value)}
-                        className="min-h-[100px]"
-                      />
-                    </div>
-
-                    <div>
-                      <Label htmlFor="previousWorkLinks">Links to Previous Work (Optional)</Label>
-                      <p className="mb-2 text-xs text-muted-foreground">
-                        Add links to portfolios, social media posts, news articles, or other evidence
-                      </p>
-                      <Textarea
-                        id="previousWorkLinks"
-                        placeholder="https://twitter.com/yourhandle/status/...&#10;https://yourwebsite.com/project"
-                        value={formData.previousWorkLinks}
-                        onChange={(e) => updateField("previousWorkLinks", e.target.value)}
-                        className="min-h-20"
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Step 5: Agreements */}
-              {currentStep === 5 && (
-                <div className="space-y-6 animate-fade-in">
-                  <h2 className="flex items-center gap-2 text-lg font-semibold">
-                    <Shield className="h-5 w-5" />
-                    Terms & Agreements
-                  </h2>
-                  <p className="text-sm text-muted-foreground">
-                    Please read and agree to the following terms before submitting your application.
-                  </p>
-
-                  <div className="space-y-4">
-                    <div className="flex items-start space-x-3 rounded-lg border border-border p-4">
-                      <Checkbox
-                        id="transparency"
-                        checked={formData.agreedTransparency}
-                        onCheckedChange={(checked) => updateField("agreedTransparency", checked as boolean)}
-                      />
-                      <label htmlFor="transparency" className="cursor-pointer text-sm leading-relaxed">
-                        <span className="font-medium">Transparency Agreement</span>
-                        <p className="mt-1 text-muted-foreground">
-                          I agree to provide full transparency for beneficiaries, including public listing of distributions and progress updates.
-                        </p>
-                      </label>
-                    </div>
-
-                    <div className="flex items-start space-x-3 rounded-lg border border-border p-4">
-                      <Checkbox
-                        id="proofUpload"
-                        checked={formData.agreedProofUpload}
-                        onCheckedChange={(checked) => updateField("agreedProofUpload", checked as boolean)}
-                      />
-                      <label htmlFor="proofUpload" className="cursor-pointer text-sm leading-relaxed">
-                        <span className="font-medium">Proof of Distribution</span>
-                        <p className="mt-1 text-muted-foreground">
-                          I agree to upload proof of distribution for all items delivered to beneficiaries.
-                        </p>
-                      </label>
-                    </div>
-
-                    <div className="flex items-start space-x-3 rounded-lg border border-border p-4">
-                      <Checkbox
-                        id="revokeAccess"
-                        checked={formData.agreedRevokeAccess}
-                        onCheckedChange={(checked) => updateField("agreedRevokeAccess", checked as boolean)}
-                      />
-                      <label htmlFor="revokeAccess" className="cursor-pointer text-sm leading-relaxed">
-                        <span className="font-medium">Platform Terms</span>
-                        <p className="mt-1 text-muted-foreground">
-                          I agree that OpenTrack can revoke my access if I misuse the platform or violate the terms of service.
-                        </p>
-                      </label>
-                    </div>
-
-                    <div className="flex items-start space-x-3 rounded-lg border border-border p-4">
-                      <Checkbox
-                        id="donationResponsibility"
-                        checked={formData.agreedDonationResponsibility}
-                        onCheckedChange={(checked) => updateField("agreedDonationResponsibility", checked as boolean)}
-                      />
-                      <label htmlFor="donationResponsibility" className="cursor-pointer text-sm leading-relaxed">
-                        <span className="font-medium">Donation Responsibility</span>
-                        <p className="mt-1 text-muted-foreground">
-                          I understand that OpenTrack does not collect money for me; I am responsible for managing donations properly and ensuring they reach intended beneficiaries.
-                        </p>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Navigation Buttons */}
-              <div className="mt-8 flex justify-between gap-4">
-                {currentStep > 1 ? (
-                  <Button type="button" variant="outline" onClick={handleBack}>
-                    Back
-                  </Button>
-                ) : (
-                  <div />
-                )}
-
-                {currentStep < 5 ? (
-                  <Button type="button" onClick={handleNext}>
-                    Continue
-                  </Button>
-                ) : (
-                  <Button type="submit" disabled={isSubmitting}>
-                    {isSubmitting ? "Submitting..." : "Submit Application"}
-                  </Button>
-                )}
               </div>
+
+              {/* Form Section 4: Timeline */}
+              <div className="bg-card rounded-xl shadow-sm border border-border overflow-hidden">
+                <div className="p-6 md:p-8">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="p-2 bg-secondary rounded-lg text-muted-foreground">
+                      <Calendar className="h-5 w-5" />
+                    </div>
+                    <h3 className="text-xl font-bold text-foreground">4. Timeline</h3>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <Label className="text-sm font-bold text-foreground mb-1.5 block">Start Date</Label>
+                      <Input
+                        type="date"
+                        value={formData.startDate}
+                        onChange={(e) => updateField("startDate", e.target.value)}
+                        className="h-12 px-4 shadow-sm"
+                      />
+                    </div>
+                    <div>
+                      <Label className="text-sm font-bold text-foreground mb-1.5 block">Projected End Date</Label>
+                      <Input
+                        type="date"
+                        value={formData.endDate}
+                        onChange={(e) => updateField("endDate", e.target.value)}
+                        className="h-12 px-4 shadow-sm"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Form Section 5: Transparency Agreement */}
+              <div className="bg-card rounded-xl shadow-sm border border-border overflow-hidden">
+                <div className="p-6 md:p-8 bg-gradient-to-br from-card to-secondary/30">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="p-2 bg-secondary rounded-lg text-muted-foreground">
+                      <Gavel className="h-5 w-5" />
+                    </div>
+                    <h3 className="text-xl font-bold text-foreground">5. Transparency Agreement</h3>
+                  </div>
+
+                  <div className="p-4 rounded-lg bg-secondary/50 border border-border text-sm text-muted-foreground mb-6 leading-relaxed">
+                    <p className="mb-2">
+                      <strong className="text-foreground">Open Data Commitment:</strong> By submitting this project, you agree to adhere to the OpenTrack Transparency Standards. This includes:
+                    </p>
+                    <ul className="list-disc pl-5 space-y-1">
+                      <li>Quarterly financial reporting with proof of expenditure.</li>
+                      <li>Real-time impact tracking updates.</li>
+                      <li>Public accessibility of non-sensitive project data.</li>
+                    </ul>
+                  </div>
+
+                  <label className="flex items-start gap-4 p-4 rounded-lg border border-primary/20 bg-primary/5 cursor-pointer hover:bg-primary/10 transition-colors">
+                    <div className="flex items-center h-6">
+                      <Checkbox
+                        checked={formData.agreedOpenData}
+                        onCheckedChange={(checked) => updateField("agreedOpenData", checked as boolean)}
+                        className="w-5 h-5"
+                      />
+                    </div>
+                    <div className="text-sm">
+                      <span className="font-bold text-foreground">I agree to the Open Data Standards</span>
+                      <p className="text-muted-foreground mt-1">
+                        I certify that all information provided is accurate and I am authorized to represent this organization.
+                      </p>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              {/* Form Footer Actions */}
+              <div className="sticky bottom-4 z-40">
+                <div className="bg-card/80 backdrop-blur-lg p-4 rounded-2xl shadow-2xl border border-border flex items-center justify-between">
+                  <Button type="button" variant="ghost" asChild>
+                    <Link href="/projects">Back</Link>
+                  </Button>
+                  <div className="flex gap-3">
+                    <Button type="button" variant="outline" className="hidden sm:flex">
+                      Save for Later
+                    </Button>
+                    <Button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="px-8 shadow-lg shadow-primary/30 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                    >
+                      {isSubmitting ? "Submitting..." : "Submit Application"}
+                    </Button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom Spacer */}
+              <div className="h-12" />
             </form>
-          </div>
+          </main>
         </div>
-      </main>
+      </div>
     </div>
   );
 }

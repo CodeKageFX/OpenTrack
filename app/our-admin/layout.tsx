@@ -1,120 +1,193 @@
 "use client";
 
 import Link from "next/link";
-import { SidebarHeader, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import {
-  LayoutDashboard,
-  FolderKanban,
+  LayoutGrid,
+  Kanban,
+  FileText,
   Users,
+  ShieldCheck,
   Settings,
-  Shield,
   LogOut,
+  Menu,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarFooter
-} from "@/components/ui/sidebar";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { useState } from "react";
 
-const sidebarLinks = [
-  { href: "/our-admin", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/our-admin/projects", label: "Project Reviews", icon: FolderKanban },
-  { href: "/our-admin/users", label: "Platform Users", icon: Users },
-  { href: "/our-admin/settings", label: "Settings", icon: Settings },
+const navItems = [
+  { label: "Dashboard Overview", icon: LayoutGrid, href: "/our-admin" },
+  { label: "Projects", icon: Kanban, href: "/our-admin/projects" },
+  { label: "Applications", icon: FileText, href: "/our-admin/applications", badge: 8 },
+  { label: "Users", icon: Users, href: "/our-admin/users" },
+  { label: "Audit Logs", icon: ShieldCheck, href: "/our-admin/logs" },
+  { label: "Settings", icon: Settings, href: "/our-admin/settings" },
 ];
 
 type PropsChildren = {
   children?: React.ReactNode;
 };
 
-export default function AdminSidebar({ children }: PropsChildren) {
+export default function AdminLayout({ children }: PropsChildren) {
   const pathname = usePathname();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
-    <>
-      <SidebarProvider>
-        <Sidebar
-          className="h-screen w-64 border-r border-border bg-sidebar"
-        >
-          <SidebarHeader>
-            <div className="flex h-16 items-center gap-2 border-b border-border px-6">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-            <Shield className="h-4 w-4 text-primary-foreground" />
+    <div className="flex h-screen w-full overflow-hidden bg-background">
+      {/* Sidebar Navigation */}
+      <aside className="w-72 hidden md:flex flex-col bg-card border-r border-border h-full z-20 shadow-sm">
+        {/* Header / Logo */}
+        <div className="p-6 pb-2">
+          <Link href="/" className="flex items-center gap-3">
+            <div className="size-10 rounded-xl bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center text-primary-foreground shadow-lg shadow-primary/20">
+              <LayoutGrid className="h-5 w-5" />
+            </div>
+            <div>
+              <h1 className="text-xl font-bold tracking-tight text-foreground leading-none">OpenTrack</h1>
+              <p className="text-xs text-muted-foreground font-medium mt-1">Super Admin Console</p>
+            </div>
+          </Link>
+        </div>
+
+        {/* User Profile Snippet */}
+        <div className="mx-4 mt-6 mb-4 p-3 bg-secondary/50 rounded-xl border border-border flex items-center gap-3">
+          <div className="size-10 rounded-full bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center text-primary-foreground font-bold text-sm">
+            MC
           </div>
-          <div>
-            <span className="font-display text-lg font-bold">OpenTrack</span>
-            <span className="ml-1 rounded bg-primary/10 px-1.5 py-0.5 text-xs font-medium text-primary">
-              Super Admin
-            </span>
+          <div className="flex flex-col overflow-hidden">
+            <span className="text-sm font-bold text-foreground truncate">Marcus Chen</span>
+            <span className="text-xs text-muted-foreground truncate">marcus@opentrack.org</span>
           </div>
         </div>
-          </SidebarHeader>
-          <SidebarContent>
-            <SidebarGroup>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  {sidebarLinks.map((link) => {
-                    const isActive =
-                      pathname === link.href ||
-                      (link.href !== "/our-admin" && pathname.startsWith(link.href));
 
-                    return (
-                      <SidebarMenuItem key={link.href}>
-                        <SidebarMenuButton asChild>
-                          <Link
-                            href={link.href}
-                            className={cn(
-                              "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
-                          isActive
-                            ? "bg-primary text-primary-foreground"
-                            : "text-muted-foreground hover:bg-secondary hover:text-foreground"
-                        )}
-                      >
-                        <link.icon className="h-4 w-4" />
-                        {link.label}
-                      </Link>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                    );
-                  })}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </SidebarGroup>
-          </SidebarContent>
-          <SidebarFooter>
-             <div className="border-t border-border p-4">
+        {/* Navigation Links */}
+        <nav className="flex-1 overflow-y-auto px-4 py-2 space-y-1">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            const isActive =
+              pathname === item.href ||
+              (item.href !== "/our-admin" && pathname.startsWith(item.href));
+
+            return (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={cn(
+                  "flex items-center justify-between px-3 py-3 rounded-xl transition-all group",
+                  isActive
+                    ? "bg-primary/10 text-primary"
+                    : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+                )}
+              >
+                <div className="flex items-center gap-3">
+                  <Icon className="h-5 w-5 group-hover:scale-110 transition-transform" />
+                  <span className={cn("text-sm", isActive ? "font-semibold" : "font-medium")}>
+                    {item.label}
+                  </span>
+                </div>
+                {item.badge && (
+                  <span className="bg-amber-500/20 text-amber-600 dark:text-amber-400 text-[10px] font-bold px-2 py-0.5 rounded-full">
+                    {item.badge}
+                  </span>
+                )}
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* Bottom Actions */}
+        <div className="p-4 border-t border-border space-y-3">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-secondary">
-                <span className="text-xs font-medium">SA</span>
-              </div>
-              <div>
-                <p className="text-sm font-medium">Super Admin</p>
-                <p className="text-xs text-muted-foreground">Platform Owner</p>
-              </div>
-            </div>
+            <span className="text-sm text-muted-foreground">Theme</span>
             <ThemeToggle />
           </div>
-          <Button variant="ghost" size="sm" className="mt-3 w-full justify-start gap-2" asChild>
+          <Button variant="ghost" className="w-full justify-start gap-2" asChild>
             <Link href="/">
-              <LogOut className="h-4 w-4" />
+              <LogOut className="h-5 w-5" />
               Exit Admin
             </Link>
           </Button>
         </div>
-          </SidebarFooter>
-        </Sidebar>
-        <SidebarTrigger />
-        {children}
-      </SidebarProvider>
-    </>
+      </aside>
+
+      {/* Main Content Area */}
+      <div className="flex-1 flex flex-col h-full overflow-hidden relative">
+        {/* Mobile Header */}
+        <header className="md:hidden bg-card border-b border-border p-4 flex items-center justify-between z-30">
+          <Link href="/" className="flex items-center gap-2">
+            <div className="size-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground">
+              <LayoutGrid className="h-4 w-4" />
+            </div>
+            <span className="font-bold text-foreground">OpenTrack</span>
+          </Link>
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="text-muted-foreground p-2"
+            >
+              <Menu className="h-6 w-6" />
+            </button>
+          </div>
+        </header>
+
+        {/* Mobile Menu Dropdown */}
+        {mobileMenuOpen && (
+          <div className="md:hidden absolute top-16 left-0 right-0 bg-card border-b border-border z-20 p-4 space-y-1">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              const isActive =
+                pathname === item.href ||
+                (item.href !== "/our-admin" && pathname.startsWith(item.href));
+
+              return (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={cn(
+                    "flex items-center justify-between px-3 py-3 rounded-xl transition-all",
+                    isActive
+                      ? "bg-primary/10 text-primary"
+                      : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+                  )}
+                >
+                  <div className="flex items-center gap-3">
+                    <Icon className="h-5 w-5" />
+                    <span className={cn("text-sm", isActive ? "font-semibold" : "font-medium")}>
+                      {item.label}
+                    </span>
+                  </div>
+                  {item.badge && (
+                    <span className="bg-amber-500/20 text-amber-600 text-[10px] font-bold px-2 py-0.5 rounded-full">
+                      {item.badge}
+                    </span>
+                  )}
+                </Link>
+              );
+            })}
+            <Button variant="ghost" className="w-full justify-start gap-2 mt-2" asChild>
+              <Link href="/">
+                <LogOut className="h-5 w-5" />
+                Exit Admin
+              </Link>
+            </Button>
+          </div>
+        )}
+
+        {/* Page Content */}
+        <main className="flex-1 overflow-y-auto">
+          {children}
+        </main>
+      </div>
+
+      {/* Decorative Gradient Mesh Background (Fixed) */}
+      <div className="fixed inset-0 pointer-events-none -z-10 opacity-40 dark:opacity-10">
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-primary/20 blur-[120px]"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-blue-400/20 blur-[120px]"></div>
+      </div>
+    </div>
   );
 }

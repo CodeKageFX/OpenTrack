@@ -93,8 +93,12 @@ const Index = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="border-b border-border md:px-30 sm:px-10 px-5">
-        <div className="py-16 md:py-24">
+      <section className="relative border-b border-border md:px-30 sm:px-10 px-5 overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute inset-0 bg-grid-pattern hero-mask -z-10" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-primary/5 rounded-full blur-3xl -z-10 pointer-events-none" />
+        
+        <div className="py-16 md:py-24 relative z-10">
           <div className="mx-auto max-w-3xl text-center">
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-secondary/50 px-4 py-1.5 text-sm">
               <span className="h-2 w-2 animate-pulse rounded-full bg-success" />
