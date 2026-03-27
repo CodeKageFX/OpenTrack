@@ -39,6 +39,7 @@ export default function Register() {
     phone: "",
     socialHandle: "",
     location: "",
+    address: "",
     reason: "",
     selectedItems: [] as string[],
     projectId: "",
@@ -58,7 +59,7 @@ export default function Register() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.fullName || !formData.email || !formData.location) {
+    if (!formData.fullName || !formData.email || !formData.location || !formData.address) {
       toast.error("Please fill in all required fields");
       return;
     }
@@ -194,22 +195,19 @@ export default function Register() {
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="socialHandle">Social Handle (Optional)</Label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">@</span>
-                  <Input
-                    id="socialHandle"
-                    placeholder="yourhandle"
-                    className="pl-8"
-                    value={formData.socialHandle}
-                    onChange={(e) => setFormData({ ...formData, socialHandle: e.target.value.replace("@", "") })}
-                    disabled={step === "loading"}
-                  />
-                </div>
+                <Label htmlFor="address">Address *</Label>
+                <Input
+                  id="address"
+                  placeholder="Enter your address"
+                  value={formData.address}
+                  onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                  disabled={step === "loading"}
+                />
               </div>
             </div>
 
             {/* Project Selection (if multiple active projects) */}
+            <div className="grid gap-4 sm:grid-cols-2">
             {activeProjects.length > 1 && (
               <div className="space-y-2">
                 <Label>Select Project</Label>
@@ -231,6 +229,22 @@ export default function Register() {
                 </Select>
               </div>
             )}
+
+            <div className="space-y-2">
+              <Label htmlFor="socialHandle">Social Handle (Optional)</Label>
+              <div className="relative">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">@</span>
+                <Input
+                  id="socialHandle"
+                  placeholder="yourhandle"
+                  className="pl-8"
+                  value={formData.socialHandle}
+                  onChange={(e) => setFormData({ ...formData, socialHandle: e.target.value.replace("@", "") })}
+                  disabled={step === "loading"}
+                />
+              </div>
+            </div>
+            </div>
 
             {/* Item Selection */}
             <div className="space-y-3">

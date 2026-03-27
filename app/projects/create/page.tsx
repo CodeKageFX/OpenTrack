@@ -71,6 +71,7 @@ interface FormData {
   projectTitle: string;
   projectCategory: string;
   problemStatement: string;
+  projectAmount: number;
   estimatedBeneficiaries: string;
   primaryDemographic: string;
   startDate: string;
@@ -98,6 +99,7 @@ export default function CreateProject() {
     projectTitle: "",
     projectCategory: "",
     problemStatement: "",
+    projectAmount: 0,
     estimatedBeneficiaries: "",
     primaryDemographic: "",
     startDate: "",
@@ -135,6 +137,7 @@ export default function CreateProject() {
       (formData.projectTitle ? 1 : 0) +
       (formData.projectCategory ? 1 : 0) +
       (formData.problemStatement ? 1 : 0) +
+      (formData.projectAmount ? 1 : 0) +
       (formData.estimatedBeneficiaries ? 1 : 0) +
       (formData.primaryDemographic ? 1 : 0) +
       (formData.startDate ? 1 : 0) +
@@ -402,7 +405,7 @@ export default function CreateProject() {
                   </div>
 
                   <div className="mt-6 space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                       <div>
                         <Label className="text-sm font-bold text-foreground mb-1.5 block">Project Title</Label>
                         <Input
@@ -415,7 +418,7 @@ export default function CreateProject() {
                       <div>
                         <Label className="text-sm font-bold text-foreground mb-1.5 block">Project Category</Label>
                         <Select value={formData.projectCategory} onValueChange={(value) => updateField("projectCategory", value)}>
-                          <SelectTrigger className="h-12 px-4 shadow-sm">
+                          <SelectTrigger className="py-[23px] w-full px-4 shadow-sm">
                             <SelectValue placeholder="Select a category..." />
                           </SelectTrigger>
                           <SelectContent>
@@ -427,6 +430,18 @@ export default function CreateProject() {
                           </SelectContent>
                         </Select>
                       </div>
+
+                      <div>
+                        <Label className="text-sm font-bold text-foreground mb-1.5 block">Project Amount</Label>
+                        <Input
+                          type="number"
+                          value={formData.projectAmount}
+                          onChange={(e) => updateField("projectAmount", Number(e.target.value))}
+                          className="h-12 px-4 shadow-sm"
+                          placeholder="Enter project amount"
+                        />
+                      </div>
+
                     </div>
 
                     <div>
