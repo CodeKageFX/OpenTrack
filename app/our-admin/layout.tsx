@@ -41,24 +41,24 @@ export default function AdminLayout({ children }: PropsChildren) {
         {/* Header / Logo */}
         <div className="p-6 pb-2">
           <Link href="/" className="flex items-center gap-3">
-            <div className="size-10 rounded-xl bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center text-primary-foreground shadow-lg shadow-primary/20">
+            <div className="size-10 rounded-xl bg-primary flex items-center justify-center text-primary-foreground shadow-sm">
               <LayoutGrid className="h-5 w-5" />
             </div>
             <div>
-              <h1 className="text-xl font-bold tracking-tight text-foreground leading-none">OpenTrack</h1>
+              <h1 className="text-xl font-bold tracking-tight text-foreground leading-none">LazTrack</h1>
               <p className="text-xs text-muted-foreground font-medium mt-1">Super Admin Console</p>
             </div>
           </Link>
         </div>
 
         {/* User Profile Snippet */}
-        <div className="mx-4 mt-6 mb-4 p-3 bg-secondary/50 rounded-xl border border-border flex items-center gap-3">
-          <div className="size-10 rounded-full bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center text-primary-foreground font-bold text-sm">
-            MC
+        <div className="mx-4 mt-6 mb-4 p-3 bg-primary/5 rounded-xl border border-primary/10 flex items-center gap-3">
+          <div className="size-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold text-sm shadow-sm">
+            WC
           </div>
           <div className="flex flex-col overflow-hidden">
-            <span className="text-sm font-bold text-foreground truncate">Marcus Chen</span>
-            <span className="text-xs text-muted-foreground truncate">marcus@opentrack.org</span>
+            <span className="text-sm font-bold text-foreground truncate">Wizarab Chen</span>
+            <span className="text-xs text-muted-foreground truncate">Wizarab@opentrack.org</span>
           </div>
         </div>
 
@@ -120,7 +120,7 @@ export default function AdminLayout({ children }: PropsChildren) {
             <div className="size-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground">
               <LayoutGrid className="h-4 w-4" />
             </div>
-            <span className="font-bold text-foreground">OpenTrack</span>
+            <span className="font-bold text-foreground">LazTrack</span>
           </Link>
           <div className="flex items-center gap-2">
             <ThemeToggle />
@@ -181,12 +181,6 @@ export default function AdminLayout({ children }: PropsChildren) {
         <main className="flex-1 overflow-y-auto">
           {children}
         </main>
-      </div>
-
-      {/* Decorative Gradient Mesh Background (Fixed) */}
-      <div className="fixed inset-0 pointer-events-none -z-10 opacity-40 dark:opacity-10">
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-primary/20 blur-[120px]"></div>
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-blue-400/20 blur-[120px]"></div>
       </div>
     </div>
   );

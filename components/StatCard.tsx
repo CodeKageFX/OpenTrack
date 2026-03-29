@@ -16,13 +16,13 @@ interface StatCardProps {
 export function StatCard({ title, value, subtitle, icon: Icon, trend, className }: StatCardProps) {
   return (
     <div className={cn(
-      "group relative overflow-hidden rounded-xl border border-border bg-card p-6 transition-all duration-300 hover:shadow-md md:w-fit w-full",
+      "group relative overflow-hidden rounded-xl border border-border bg-card p-6 shadow-sm transition-all duration-300 hover:shadow-md hover:border-primary/20 md:w-fit w-full",
       className
     )}>
       <div className="flex items-start justify-between md:gap-5">
         <div className="space-y-2">
           <p className="text-sm font-medium text-muted-foreground">{title}</p>
-          <p className="text-3xl font-bold font-display tracking-tight">{value}</p>
+          <p className="text-4xl font-bold tracking-tight text-foreground">{value}</p>
           {subtitle && (
             <p className="text-sm text-muted-foreground">{subtitle}</p>
           )}
@@ -35,8 +35,8 @@ export function StatCard({ title, value, subtitle, icon: Icon, trend, className 
             </p>
           )}
         </div>
-        <div className="rounded-lg bg-secondary p-3 transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-          <Icon className="h-5 w-5" />
+        <div className="rounded-xl bg-primary/10 p-3 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+          <Icon className="h-6 w-6" />
         </div>
       </div>
     </div>

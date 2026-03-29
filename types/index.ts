@@ -1,4 +1,4 @@
-// Universal types for OpenTrack platform
+// Universal types for LazTrack platform
 
 export type ProjectStatus = "ongoing" | "finished" | "upcoming";
 export type ProjectSubmissionStatus = "pending" | "approved" | "rejected";

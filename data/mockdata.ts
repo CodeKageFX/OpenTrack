@@ -110,7 +110,7 @@ export const mockBeneficiaries: Beneficiary[] = [
 ];
 
 export const mockDonors: Donor[] = [
-  { id: "don-001", name: "Emeka Okafor", email: "emeka@email.com", amount: 150000, isAnonymous: false, projectId: "proj-001", createdAt: "2024-01-15" },
+  { id: "don-001", name: "Don Jazzy", email: "donjazzy@email.com", amount: 20000000, isAnonymous: false, projectId: "proj-001", createdAt: "2024-01-15" },
   { id: "don-002", name: "Anonymous", email: "anon@email.com", amount: 500000, isAnonymous: true, projectId: "proj-001", createdAt: "2024-01-14" },
   { id: "don-003", name: "Ngozi Adebayo", email: "ngozi@email.com", amount: 75000, isAnonymous: false, projectId: "proj-001", createdAt: "2024-01-13" },
   { id: "don-004", name: "Chukwuemeka Nwosu", email: "chuk@email.com", amount: 200000, isAnonymous: false, projectId: "proj-002", createdAt: "2024-01-12" },

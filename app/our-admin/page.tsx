@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 import { mockProjects } from "@/data/mockdata";
 
-export default function OpenTrackAdminDashboard() {
+export default function LazTrackAdminDashboard() {
   const pendingProjects = mockProjects.filter((p) => p.submissionStatus === "pending");
   const approvedProjects = mockProjects.filter((p) => p.submissionStatus === "approved");
 
@@ -32,7 +32,7 @@ export default function OpenTrackAdminDashboard() {
 
   // Mock applications data
   const recentApplications = [
-    { id: 1, org: "Global Future", initials: "GF", color: "bg-orange-500/10 text-orange-600 dark:text-orange-400", project: "Clean Water Initiative", region: "Sub-Saharan Africa", date: "Oct 24, 2023" },
+    { id: 1, org: "Sol", initials: "GF", color: "bg-orange-500/10 text-orange-600 dark:text-orange-400", project: "10k Laptops for 10k Humans", region: "Nigeria", date: "Oct 24, 2023" },
     { id: 2, org: "EduLink Foundation", initials: "EL", color: "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400", project: "Rural Literacy Program", region: "Southeast Asia", date: "Oct 23, 2023" },
     { id: 3, org: "HealthForAll", initials: "HA", color: "bg-teal-500/10 text-teal-600 dark:text-teal-400", project: "Mobile Clinic Setup", region: "South America", date: "Oct 23, 2023" },
     { id: 4, org: "Women's Work", initials: "WW", color: "bg-pink-500/10 text-pink-600 dark:text-pink-400", project: "Micro-finance Initiative", region: "India", date: "Oct 22, 2023" },
@@ -55,7 +55,7 @@ export default function OpenTrackAdminDashboard() {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <h2 className="text-3xl md:text-4xl font-extrabold text-foreground tracking-tight">Dashboard Overview</h2>
-              <p className="text-muted-foreground mt-2 text-lg">Welcome back, Marcus. Here&apos;s what&apos;s happening today.</p>
+              <p className="text-muted-foreground mt-2 text-lg">Welcome back, Wizarab. Here&apos;s what&apos;s happening today.</p>
             </div>
             <div className="flex items-center gap-3">
               <Button variant="outline" className="gap-2">

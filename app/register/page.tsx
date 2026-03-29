@@ -137,7 +137,7 @@ export default function Register() {
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6 rounded-2xl border border-border bg-card p-6 md:p-8">
+          <form onSubmit={handleSubmit} className="space-y-6 rounded-3xl border border-border bg-card p-6 md:p-10 shadow-sm">
             <div className="space-y-2">
               <Label htmlFor="fullName">Full Name *</Label>
               <Input
@@ -319,10 +319,10 @@ export default function Register() {
               </Label>
             </div>
 
-            <Button type="submit" size="lg" className="w-full" disabled={step === "loading"}>
+            <Button type="submit" size="lg" className="w-full bg-warning hover:bg-warning/90 text-warning-foreground font-bold rounded-full h-14 text-lg shadow-sm" disabled={step === "loading"}>
               {step === "loading" ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                   Submitting...
                 </>
               ) : (

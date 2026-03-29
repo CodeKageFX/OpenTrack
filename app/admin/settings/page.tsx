@@ -29,7 +29,7 @@ export default function AdminSettings() {
           <div className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="projectName">Project Name</Label>
-              <Input id="projectName" defaultValue="OpenTrack Laptop Distribution" />
+              <Input id="projectName" defaultValue="LazTrack Laptop Distribution" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="projectDescription">Description</Label>

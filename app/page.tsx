@@ -64,8 +64,8 @@ const faqs = [
     answer: "Beneficiaries apply through our registration form and undergo verification including ID checks, social media validation, and community references. The selection prioritizes those with demonstrated need and commitment."
   },
   {
-    question: "What items can be distributed through OpenTrack?",
-    answer: "OpenTrack supports any type of distribution - laptops, food packs, cash grants, textbooks, equipment, and more. Each project can define its own item types and distribution rules."
+    question: "What items can be distributed through LazTrack?",
+    answer: "LazTrack supports any type of distribution - laptops, food packs, cash grants, textbooks, equipment, and more. Each project can define its own item types and distribution rules."
   },
   {
     question: "Can I donate anonymously?",
@@ -93,15 +93,11 @@ const Index = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="relative border-b border-border md:px-30 sm:px-10 px-5 overflow-hidden">
-        {/* Background Elements */}
-        <div className="absolute inset-0 bg-grid-pattern hero-mask -z-10" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-primary/5 rounded-full blur-3xl -z-10 pointer-events-none" />
-        
-        <div className="py-16 md:py-20 relative z-10">
+      <section className="relative border-b border-border md:px-30 sm:px-10 px-5 bg-card">
+        <div className="py-20 md:py-28 relative z-10">
           <div className="mx-auto max-w-3xl text-center">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-secondary/50 px-4 py-1.5 text-sm">
-              <span className="h-2 w-2 animate-pulse rounded-full bg-success" />
+            <div className="mb-8 inline-flex items-center gap-2 rounded-full bg-background px-4 py-1.5 text-sm border border-border">
+              <span className="h-2 w-2 rounded-full bg-success" />
               <span className="text-muted-foreground">Live Projects • {totalStats.beneficiariesApproved} beneficiaries helped</span>
             </div>
             
@@ -115,13 +111,13 @@ const Index = () => {
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-4">
-              <Button asChild>
+              <Button asChild className="bg-warning hover:bg-warning/90 text-warning-foreground rounded-full px-8 py-6 text-lg font-bold shadow-sm transition-all">
                 <Link href="/donate">
                   Donate Now
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
-              <Button variant="outline" asChild>
+              <Button variant="outline" className="rounded-full px-8 py-6 text-lg font-semibold bg-card" asChild>
                 <Link href="/register">Apply as Beneficiary</Link>
               </Button>
             </div>
@@ -178,7 +174,7 @@ const Index = () => {
       </section>
 
       {/* Items Distributed Summary */}
-      <section className="border-y border-border bg-secondary/30">
+      <section className="border-y border-border bg-card mt-8">
         <div className="py-16 md:py-24 md:px-30 sm:px-10 px-5">
           <div className="mb-12 text-center">
             <h2 className="mb-4 font-display text-3xl font-bold md:text-4xl">Resources Distributed</h2>
@@ -188,9 +184,9 @@ const Index = () => {
             {itemDistribution.map((item, index) => (
               <div
                 key={index}
-                className="rounded-xl border border-border bg-card p-6 text-center transition-shadow hover:shadow-md w-[200px]"
+                className="rounded-2xl border border-border bg-background p-6 text-center transition-shadow hover:shadow-sm w-[200px]"
               >
-                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-primary text-primary-foreground">
+                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary">
                   <ItemIcon name={item.icon} className="h-7 w-7" />
                 </div>
                 <p className="font-display text-3xl font-bold">{item.distributed}</p>
@@ -254,7 +250,7 @@ const Index = () => {
       </section>
 
       {/* Beneficiary Proof Gallery */}
-      <section id="proof" className="border-y border-border bg-secondary/30">
+      <section id="proof" className="border-y border-border bg-card mt-12">
         <div className="py-16 md:py-24 md:px-30 sm:px-10 px-5">
           <div className="mb-12 text-center">
             <h2 className="mb-4 font-display text-3xl font-bold md:text-4xl">Proof of Impact</h2>
@@ -289,15 +285,15 @@ const Index = () => {
       <section id="about">
         <div className="py-16 md:py-24 md:px-30 sm:px-10 px-5">
           <div className="mx-auto max-w-3xl text-center">
-            <h2 className="mb-6 font-display text-3xl font-bold md:text-4xl">About OpenTrack</h2>
+            <h2 className="mb-6 font-display text-3xl font-bold md:text-4xl">About LazTrack</h2>
             <p className="mb-6 text-lg opacity-90">
-              OpenTrack was born from a simple belief: transparency builds trust. We created this platform 
+              LazTrack was born from a simple belief: transparency builds trust. We created this platform 
               to ensure that every donation to community projects reaches its intended destination, with 
               verifiable proof every step of the way.
             </p>
             <p className="text-lg opacity-90">
               Our platform supports multiple projects distributing various types of resources - from laptops 
-              and educational materials to food packs and cash grants. With OpenTrack, donors can see exactly 
+              and educational materials to food packs and cash grants. With LazTrack, donors can see exactly 
               where their money goes, and beneficiaries can prove they received their items.
             </p>
           </div>
@@ -329,20 +325,20 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="pb-16 md:pb-24 mx-auto md:px-30 sm:px-10 px-5">
-        <div className="rounded-2xl bg-secondary p-8 text-center md:p-16">
-          <h2 className="mb-4 font-display text-3xl font-bold md:text-4xl">Ready to Make an Impact?</h2>
-          <p className="mb-8 text-lg text-muted-foreground">
+      <section className="pb-16 md:pb-24 pt-16 mx-auto md:px-30 sm:px-10 px-5 bg-card">
+        <div className="rounded-3xl bg-primary text-primary-foreground p-8 text-center md:p-16 shadow-lg border border-primary/20">
+          <h2 className="mb-4 font-display text-3xl font-bold md:text-5xl tracking-tight text-white">Ready to Make an Impact?</h2>
+          <p className="mb-10 text-xl text-white/90 max-w-2xl mx-auto">
             Join hundreds of donors supporting communities across Nigeria
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
-            <Button variant="default" size="lg" asChild>
+            <Button className="bg-warning hover:bg-warning/90 text-warning-foreground rounded-full px-8 py-6 text-lg font-bold shadow-sm" asChild>
               <Link href="/donate">
                 Donate Now
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            <Button variant="outline" size="lg" asChild>
+            <Button variant="outline" className="rounded-full px-8 py-6 text-lg font-semibold border-primary-foreground/20 bg-primary hover:bg-primary-foreground/10 text-primary-foreground" asChild>
               <Link href="/register">Apply as Beneficiary</Link>
             </Button>
           </div>

@@ -180,7 +180,7 @@ const ProjectDetail = () => {
                 <div className="pt-4 border-t border-border">
                   <div className="flex items-center gap-2 text-sm text-muted-foreground">
                     <CheckCircle2 className="h-4 w-4 text-primary" />
-                    <span>Verified by OpenTrack</span>
+                    <span>Verified by LazTrack</span>
                   </div>
                 </div>
               </CardContent>
@@ -264,7 +264,7 @@ const ProjectDetail = () => {
                     <p className="text-sm text-muted-foreground mb-1">2 weeks ago</p>
                     <h4 className="font-medium mb-2">Project Launched</h4>
                     <p className="text-muted-foreground">
-                      {project.name} is now live on OpenTrack. We&apos;re accepting donations and beneficiary applications.
+                      {project.name} is now live on LazTrack. We&apos;re accepting donations and beneficiary applications.
                     </p>
                   </div>
                 </div>

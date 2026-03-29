@@ -19,11 +19,11 @@ export function DonorCard({ name, amount, time, isAnonymous, className }: DonorC
 
   return (
     <div className={cn(
-      "flex items-center justify-between rounded-lg border border-border bg-card p-4 transition-all duration-200 hover:bg-secondary/50",
+      "flex items-center justify-between rounded-xl border border-border bg-card p-4 transition-all duration-300 hover:border-primary/30 hover:shadow-sm",
       className
     )}>
       <div className="flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary font-medium">
+        <div className="flex h-11 w-11 items-center justify-center rounded-full bg-primary/10 text-primary font-bold shadow-inner">
           {isAnonymous ? "?" : name.charAt(0).toUpperCase()}
         </div>
         <div>

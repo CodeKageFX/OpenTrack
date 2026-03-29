@@ -210,7 +210,7 @@ export default function CreateProject() {
                 <ShieldCheck className="h-5 w-5" />
               </div>
               <div className="flex flex-col">
-                <h1 className="text-lg font-bold tracking-tight text-foreground leading-none">OpenTrack</h1>
+                <h1 className="text-lg font-bold tracking-tight text-foreground leading-none">LazTrack</h1>
                 <span className="text-[10px] font-semibold text-primary uppercase tracking-wider">Admin Portal</span>
               </div>
             </Link>
@@ -582,7 +582,7 @@ export default function CreateProject() {
 
                   <div className="p-4 rounded-lg bg-secondary/50 border border-border text-sm text-muted-foreground mb-6 leading-relaxed">
                     <p className="mb-2">
-                      <strong className="text-foreground">Open Data Commitment:</strong> By submitting this project, you agree to adhere to the OpenTrack Transparency Standards. This includes:
+                      <strong className="text-foreground">Open Data Commitment:</strong> By submitting this project, you agree to adhere to the LazTrack Transparency Standards. This includes:
                     </p>
                     <ul className="list-disc pl-5 space-y-1">
                       <li>Quarterly financial reporting with proof of expenditure.</li>

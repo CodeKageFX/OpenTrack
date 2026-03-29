@@ -81,7 +81,7 @@ export default function ApplicationReviewPage() {
               <div className="size-8 flex items-center justify-center bg-primary/10 rounded-lg text-primary">
                 <Triangle className="h-5 w-5" />
               </div>
-              <h2 className="text-lg font-bold tracking-tight">OpenTrack</h2>
+              <h2 className="text-lg font-bold tracking-tight">LazTrack</h2>
             </Link>
             <div className="h-6 w-px bg-border mx-2" />
             {/* Breadcrumbs */}
