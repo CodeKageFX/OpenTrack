@@ -22,7 +22,7 @@ import {
 import { Search, Download, Eye, Image as ImageIcon } from "lucide-react";
 
 const mockDonors = [
-  { id: 1, name: "Emeka Okafor", email: "emeka@example.com", amount: 150000, date: "2024-01-15", hasReceipt: true },
+  { id: 1, name: "Don Jazzy", email: "donjazzy@example.com", amount: 20000000, date: "2024-01-15", hasReceipt: true },
   { id: 2, name: "Anonymous", email: "anon@example.com", amount: 500000, date: "2024-01-14", hasReceipt: false },
   { id: 3, name: "Ngozi Adebayo", email: "ngozi@example.com", amount: 75000, date: "2024-01-13", hasReceipt: true },
   { id: 4, name: "Chukwuemeka Nwosu", email: "chukwu@example.com", amount: 200000, date: "2024-01-12", hasReceipt: true },
@@ -103,7 +103,7 @@ export default function AdminDonors() {
       </div>
 
       {/* Table */}
-      <div className="rounded-xl border border-border bg-card">
+      <div className="rounded-xl border border-border bg-card shadow-sm">
         <Table>
           <TableHeader>
             <TableRow>
@@ -126,7 +126,7 @@ export default function AdminDonors() {
                 <TableCell>{formatDate(donor.date)}</TableCell>
                 <TableCell>
                   {donor.hasReceipt ? (
-                    <Badge className="gap-1">
+                    <Badge className="gap-1 bg-primary/10 text-primary hover:bg-primary/20 border-transparent">
                       <ImageIcon className="h-3 w-3" />
                       Uploaded
                     </Badge>

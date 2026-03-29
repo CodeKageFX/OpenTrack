@@ -1,6 +1,6 @@
-# **OpenTrack: Transparent Donation & Distribution Platform** 🌍
+# **LazTrack: Transparent Donation & Distribution Platform** 🌍
 
-OpenTrack is a cutting-edge web application designed to bring unparalleled transparency to community projects and aid distribution. Built with a focus on trust and accountability, the platform allows organizations to manage projects, collect donations, verify beneficiaries, and provide verifiable proof of item distribution, ensuring every contribution makes a visible impact.
+LazTrack is a cutting-edge web application designed to bring unparalleled transparency to community projects and aid distribution. Built with a focus on trust and accountability, the platform allows organizations to manage projects, collect donations, verify beneficiaries, and provide verifiable proof of item distribution, ensuring every contribution makes a visible impact.
 
 ## Features
 
@@ -18,7 +18,7 @@ OpenTrack is a cutting-edge web application designed to bring unparalleled trans
 
 ## Usage
 
-To experience OpenTrack, follow the instructions below to run the application locally.
+To experience LazTrack, follow the instructions below to run the application locally.
 
 ### Running the Application
 
@@ -56,25 +56,22 @@ To experience OpenTrack, follow the instructions below to run the application lo
 
 ## Contributing
 
-We welcome contributions to OpenTrack! If you're interested in improving the platform, please follow these guidelines:
-
-*   ✨ **Fork the repository.**
-*   🌿 **Create a new branch** for your feature or bug fix: `git checkout -b feature/your-feature-name`.
-*   💻 **Make your changes** and ensure your code adheres to the project's coding style.
-*   ✅ **Write clear and concise commit messages.**
-*   🚀 **Push your branch** to your forked repository.
-*   📝 **Open a pull request** with a detailed description of your changes.
+We welcome contributions! Please see our [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines on branching and PR submissions.
 
 ## License
 
-This project is open-source.
+Distributed under the **MIT License**. See [LICENSE](./LICENSE) for more information.
 
 ## Author Info
 
-*   **Your Name**
-    *   Email: [your.email@example.com](mailto:your.email@example.com)
-    *   LinkedIn: [linkedin.com/in/your-profile](https://linkedin.com/in/your-profile)
-    *   Twitter: [@your_handle](https://twitter.com/your_handle)
+*   **CodeKage**
+    *   Email: [luqmanola60@gmail.com](mailto:luqmanola60@gmail.com)
+
+---
+
+## 🔗 Related Repositories
+
+- **Backend**: [LazTrack Backend](https://github.com/CodeKageFX/OpenTrack-backend)
 
 ---
 

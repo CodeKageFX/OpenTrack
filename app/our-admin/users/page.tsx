@@ -82,7 +82,7 @@ export default function PlatformUsers() {
       </div>
 
       {/* Users Table */}
-      <div className="rounded-xl border border-border bg-card">
+      <div className="rounded-xl border border-border bg-card shadow-sm">
         <Table>
           <TableHeader>
             <TableRow>
@@ -111,8 +111,8 @@ export default function PlatformUsers() {
                   <TableRow key={user.id}>
                     <TableCell>
                       <div className="flex items-center gap-3">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary">
-                          <span className="text-sm font-medium">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary font-bold shadow-inner border border-primary/20">
+                          <span className="text-sm">
                             {user.name.split(" ").map((n) => n[0]).join("")}
                           </span>
                         </div>

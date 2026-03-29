@@ -22,7 +22,7 @@ export function BeneficiaryCard({
 }: BeneficiaryCardProps) {
   return (
     <div className={cn(
-      "group relative overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 hover:shadow-lg",
+      "group relative overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1",
       className
     )}>
       <div className="aspect-square overflow-hidden">
@@ -36,8 +36,8 @@ export function BeneficiaryCard({
       </div>
       {isVerified && (
         <div className="absolute right-3 top-3">
-          <div className="flex items-center gap-1 rounded-full bg-success/90 px-2 py-1 text-xs font-medium text-success-foreground backdrop-blur-sm">
-            <CheckCircle2 className="h-3 w-3" />
+          <div className="flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1.5 text-xs font-bold text-success shadow-sm backdrop-blur-md">
+            <CheckCircle2 className="h-4 w-4" />
             Verified
           </div>
         </div>
