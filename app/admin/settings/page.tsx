@@ -14,7 +14,7 @@ export default function AdminSettings() {
   };
 
   return (
-    <div className="p-4 md:p-8">
+    <div className="mx-auto w-full max-w-6xl p-4 md:p-10">
       <div className="mb-8">
         <h1 className="font-display text-2xl font-bold md:text-3xl">Settings</h1>
         <p className="text-muted-foreground">
@@ -24,7 +24,7 @@ export default function AdminSettings() {
 
       <div className="max-w-2xl space-y-8">
         {/* Project Branding */}
-        <section className="rounded-xl border border-border bg-card p-6">
+        <section className="rounded-2xl border border-border/70 bg-card/95 p-6 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)]">
           <h2 className="mb-4 font-display text-lg font-semibold">Project Branding</h2>
           <div className="space-y-4">
             <div className="space-y-2">
@@ -53,7 +53,7 @@ export default function AdminSettings() {
         <Separator />
 
         {/* Donation Settings */}
-        <section className="rounded-xl border border-border bg-card p-6">
+        <section className="rounded-2xl border border-border/70 bg-card/95 p-6 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)]">
           <h2 className="mb-4 font-display text-lg font-semibold">Donation Settings</h2>
           <div className="space-y-4">
             <div className="space-y-2">
@@ -79,7 +79,7 @@ export default function AdminSettings() {
         <Separator />
 
         {/* Distribution Rules */}
-        <section className="rounded-xl border border-border bg-card p-6">
+        <section className="rounded-2xl border border-border/70 bg-card/95 p-6 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)]">
           <h2 className="mb-4 font-display text-lg font-semibold">Distribution Rules</h2>
           <div className="space-y-4">
             <div className="flex items-center justify-between">
@@ -119,10 +119,10 @@ export default function AdminSettings() {
         <Separator />
 
         {/* Admin Accounts */}
-        <section className="rounded-xl border border-border bg-card p-6">
+        <section className="rounded-2xl border border-border/70 bg-card/95 p-6 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)]">
           <h2 className="mb-4 font-display text-lg font-semibold">Admin Accounts</h2>
           <div className="space-y-4">
-            <div className="flex items-center justify-between rounded-lg border border-border p-4">
+            <div className="flex items-center justify-between rounded-xl border border-border/70 p-4 bg-secondary/40">
               <div>
                 <p className="font-medium">admin@opentrack.org</p>
                 <p className="text-sm text-muted-foreground">Owner</p>
@@ -140,7 +140,7 @@ export default function AdminSettings() {
         <Separator />
 
         {/* Notifications */}
-        <section className="rounded-xl border border-border bg-card p-6">
+        <section className="rounded-2xl border border-border/70 bg-card/95 p-6 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)]">
           <h2 className="mb-4 font-display text-lg font-semibold">Notifications</h2>
           <div className="space-y-4">
             <div className="flex items-center justify-between">

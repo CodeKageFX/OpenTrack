@@ -46,27 +46,30 @@ export default function AdminDashboard() {
   const fundingProgress = (stats.totalRaised / totalTarget) * 100;
 
   return (
-    <div className="p-4 md:p-8">
-      <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <div>
-          <h1 className="font-display text-2xl font-bold md:text-3xl">Dashboard</h1>
-          <p className="text-muted-foreground">Welcome back! Here&apos;s your overview.</p>
-        </div>
-        <div className="flex gap-2">
-          <Button variant="outline" asChild>
-            <Link href="/admin/projects">
-              <FolderKanban className="mr-2 h-4 w-4" />
-              View Projects
-            </Link>
-          </Button>
-          <Button asChild>
-            <Link href="/admin/items">
-              <Plus className="mr-2 h-4 w-4" />
-              Add Items
-            </Link>
-          </Button>
+    <div className="mx-auto w-full max-w-6xl p-4 md:p-10">
+      <div className="mb-8 rounded-[28px] border border-border/70 bg-gradient-to-br from-primary/10 via-white to-warning/10 p-6 shadow-[0_30px_80px_-55px_rgba(15,23,42,0.5)]">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div>
+            <h1 className="font-display text-2xl font-bold md:text-3xl">Dashboard Overview</h1>
+            <p className="text-muted-foreground">Track donations, beneficiaries, and distribution progress in real time.</p>
+          </div>
+          <div className="flex gap-2">
+            <Button variant="outline" asChild>
+              <Link href="/admin/projects">
+                <FolderKanban className="mr-2 h-4 w-4" />
+                View Projects
+              </Link>
+            </Button>
+            <Button asChild>
+              <Link href="/admin/items">
+                <Plus className="mr-2 h-4 w-4" />
+                Add Items
+              </Link>
+            </Button>
+          </div>
         </div>
       </div>
+      <div className="mb-8" />
 
       {/* Stats Grid */}
       <div className="mb-8 w-full flex flex-wrap gap-3">
@@ -106,7 +109,7 @@ export default function AdminDashboard() {
 
       <div className="grid gap-8 lg:grid-cols-2">
         {/* Funding Progress */}
-        <div className="rounded-xl border border-border bg-card p-6">
+        <div className="rounded-2xl border border-border/70 bg-card/95 p-6 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)]">
           <div className="mb-4 flex items-center justify-between">
             <h2 className="font-display text-lg font-semibold">Funding Progress</h2>
             <span className="text-2xl font-bold">{fundingProgress.toFixed(0)}%</span>
@@ -119,7 +122,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* Quick Actions */}
-        <div className="rounded-xl border border-border bg-card p-6">
+        <div className="rounded-2xl border border-border/70 bg-card/95 p-6 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)]">
           <h2 className="mb-4 font-display text-lg font-semibold">Quick Actions</h2>
           <div className="grid grid-cols-2 gap-3">
             <Button variant="outline" asChild className="h-auto flex-col gap-2 py-4">
@@ -151,7 +154,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* Item Distribution Summary */}
-      <div className="mt-8 rounded-xl border border-border bg-card p-6">
+      <div className="mt-8 rounded-2xl border border-border/70 bg-card/95 p-6 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)]">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="font-display text-lg font-semibold">Items Distribution</h2>
           <Button variant="ghost" size="sm" asChild>
@@ -165,7 +168,7 @@ export default function AdminDashboard() {
           {itemDistribution.map((item, index) => {
             const progress = (item.distributed / item.total) * 100;
             return (
-              <div key={index} className="rounded-lg border border-border bg-secondary/30 p-4">
+              <div key={index} className="rounded-xl border border-border/70 bg-secondary/50 p-4">
                 <div className="mb-2 flex items-center gap-2">
                   <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10">
                     <ItemIcon name={item.icon} className="h-4 w-4" />
@@ -191,7 +194,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* Recent Activity */}
-      <div className="mt-8 rounded-xl border border-border bg-card p-6">
+      <div className="mt-8 rounded-2xl border border-border/70 bg-card/95 p-6 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)]">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="font-display text-lg font-semibold">Recent Activity</h2>
           <Button variant="ghost" size="sm" asChild>

@@ -66,7 +66,7 @@ export default function AdminDonors() {
   const totalAmount = filteredDonors.reduce((sum, d) => sum + d.amount, 0);
 
   return (
-    <div className="p-4 md:p-8">
+    <div className="mx-auto w-full max-w-6xl p-4 md:p-10">
       <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
           <h1 className="font-display text-2xl font-bold md:text-3xl">Donors</h1>
@@ -103,7 +103,7 @@ export default function AdminDonors() {
       </div>
 
       {/* Table */}
-      <div className="rounded-xl border border-border bg-card shadow-sm">
+      <div className="rounded-2xl border border-border/70 bg-card/95 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)]">
         <Table>
           <TableHeader>
             <TableRow>

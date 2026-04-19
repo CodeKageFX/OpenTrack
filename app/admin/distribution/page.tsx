@@ -65,7 +65,7 @@ export default function AdminDistribution() {
   };
 
   return (
-    <div className="p-4 md:p-8">
+    <div className="mx-auto w-full max-w-6xl p-4 md:p-10">
       <div className="mb-8">
         <h1 className="font-display text-2xl font-bold md:text-3xl">Distribution</h1>
         <p className="text-muted-foreground">
@@ -75,7 +75,7 @@ export default function AdminDistribution() {
 
       <div className="grid gap-8 lg:grid-cols-[1fr_auto_1fr]">
         {/* Beneficiaries Column */}
-        <div className="rounded-xl border border-border bg-card p-6">
+        <div className="rounded-2xl border border-border/70 bg-card/95 p-6 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)]">
           <div className="mb-4 flex items-center gap-2">
             <UserCheck className="h-5 w-5 text-muted-foreground" />
             <h2 className="font-display text-lg font-semibold">
@@ -90,10 +90,10 @@ export default function AdminDistribution() {
             {unassignedBeneficiaries.map((beneficiary) => (
               <div
                 key={beneficiary.id}
-                className={`flex cursor-pointer items-center gap-3 rounded-lg border p-4 transition-colors ${
+                className={`flex cursor-pointer items-center gap-3 rounded-xl border p-4 transition-colors ${
                   selectedBeneficiaries.includes(beneficiary.id)
-                    ? "border-primary bg-primary/5"
-                    : "border-border hover:bg-secondary/50"
+                    ? "border-primary/40 bg-primary/5"
+                    : "border-border/70 hover:bg-secondary/50"
                 }`}
                 onClick={() => toggleBeneficiary(beneficiary.id)}
               >
@@ -131,7 +131,7 @@ export default function AdminDistribution() {
         </div>
 
         {/* Laptops Column */}
-        <div className="rounded-xl border border-border bg-card p-6">
+        <div className="rounded-2xl border border-border/70 bg-card/95 p-6 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)]">
           <div className="mb-4 flex items-center gap-2">
             <Laptop className="h-5 w-5 text-muted-foreground" />
             <h2 className="font-display text-lg font-semibold">
@@ -146,10 +146,10 @@ export default function AdminDistribution() {
             {availableLaptops.map((laptop) => (
               <div
                 key={laptop.id}
-                className={`flex cursor-pointer items-center gap-3 rounded-lg border p-4 transition-colors ${
+                className={`flex cursor-pointer items-center gap-3 rounded-xl border p-4 transition-colors ${
                   selectedLaptops.includes(laptop.id)
-                    ? "border-primary bg-primary/5"
-                    : "border-border hover:bg-secondary/50"
+                    ? "border-primary/40 bg-primary/5"
+                    : "border-border/70 hover:bg-secondary/50"
                 }`}
                 onClick={() => toggleLaptop(laptop.id)}
               >
@@ -176,7 +176,7 @@ export default function AdminDistribution() {
 
       {/* Selection Summary */}
       {(selectedBeneficiaries.length > 0 || selectedLaptops.length > 0) && (
-        <div className="mt-8 rounded-xl border border-primary bg-primary/5 p-6">
+        <div className="mt-8 rounded-2xl border border-primary/40 bg-primary/5 p-6">
           <h3 className="mb-2 font-semibold">Selection Summary</h3>
           <p className="text-sm text-muted-foreground">
             {selectedBeneficiaries.length} beneficiary(s) selected •{" "}

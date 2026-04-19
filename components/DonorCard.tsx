@@ -19,7 +19,7 @@ export function DonorCard({ name, amount, time, isAnonymous, className }: DonorC
 
   return (
     <div className={cn(
-      "flex items-center justify-between rounded-xl border border-border bg-card p-4 transition-all duration-300 hover:border-primary/30 hover:shadow-sm",
+      "flex items-center justify-between rounded-2xl border border-border/70 bg-card/95 p-4 shadow-[0_20px_50px_-40px_rgba(15,23,42,0.4)] transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30",
       className
     )}>
       <div className="flex items-center gap-3">

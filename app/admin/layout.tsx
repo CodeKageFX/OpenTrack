@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 import {
   LayoutDashboard,
@@ -50,10 +50,21 @@ export default function AdminSidebar({ children }: PropsChildren) {
       <SidebarProvider>
         <Sidebar
           collapsible="icon"
-          className="h-screen w-64 border-r border-border bg-sidebar fixed"
+          className="h-screen w-64 border-r border-border/70 bg-sidebar/95 fixed shadow-[0_30px_60px_-50px_rgba(15,23,42,0.5)]"
         >
           <SidebarContent>
             <SidebarGroup>
+              <div className="px-3 pt-4 pb-2">
+                <Link href="/" className="flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-2xl bg-gradient-to-br from-primary to-accent text-primary-foreground flex items-center justify-center shadow-md">
+                    <LayoutDashboard className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold">LazTrack</p>
+                    <p className="text-xs text-muted-foreground">Project Admin</p>
+                  </div>
+                </Link>
+              </div>
               <SidebarGroupContent>
                 <SidebarMenu>
                   {navItems.map((item) => (
@@ -86,8 +97,13 @@ export default function AdminSidebar({ children }: PropsChildren) {
             </SidebarMenuButton>
           </SidebarFooter>
         </Sidebar>
-        <SidebarTrigger />
-        {children}
+        <SidebarInset className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(0,135,81,0.08),_transparent_45%)]">
+          <div className="sticky top-0 z-10 flex items-center justify-between bg-background/80 px-4 py-3 backdrop-blur-xl md:hidden">
+            <SidebarTrigger />
+            <div className="h-2 w-2 rounded-full bg-primary" />
+          </div>
+          {children}
+        </SidebarInset>
       </SidebarProvider>
     </>
   );

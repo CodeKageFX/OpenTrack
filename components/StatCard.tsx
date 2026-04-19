@@ -16,7 +16,7 @@ interface StatCardProps {
 export function StatCard({ title, value, subtitle, icon: Icon, trend, className }: StatCardProps) {
   return (
     <div className={cn(
-      "group relative overflow-hidden rounded-xl border border-border bg-card p-6 shadow-sm transition-all duration-300 hover:shadow-md hover:border-primary/20 md:w-fit w-full",
+      "group relative w-full overflow-hidden rounded-2xl border border-border/70 bg-gradient-to-br from-white via-white to-primary/5 p-6 shadow-[0_24px_60px_-40px_rgba(15,23,42,0.4)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_30px_70px_-40px_rgba(0,0,0,0.45)] md:w-fit",
       className
     )}>
       <div className="flex items-start justify-between md:gap-5">
@@ -35,7 +35,7 @@ export function StatCard({ title, value, subtitle, icon: Icon, trend, className 
             </p>
           )}
         </div>
-        <div className="rounded-xl bg-primary/10 p-3 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+        <div className="rounded-2xl bg-primary/10 p-3 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground shadow-inner">
           <Icon className="h-6 w-6" />
         </div>
       </div>

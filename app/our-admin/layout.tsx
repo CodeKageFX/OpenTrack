@@ -35,9 +35,9 @@ export default function AdminLayout({ children }: PropsChildren) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-background">
+    <div className="flex h-screen w-full overflow-hidden bg-[radial-gradient(circle_at_top,_rgba(0,135,81,0.08),_transparent_45%)]">
       {/* Sidebar Navigation */}
-      <aside className="w-72 hidden md:flex flex-col bg-card border-r border-border h-full z-20 shadow-sm">
+      <aside className="w-72 hidden md:flex flex-col bg-card/95 border-r border-border/70 h-full z-20 shadow-[0_30px_60px_-50px_rgba(15,23,42,0.5)]">
         {/* Header / Logo */}
         <div className="p-6 pb-2">
           <Link href="/" className="flex items-center gap-3">
@@ -52,7 +52,7 @@ export default function AdminLayout({ children }: PropsChildren) {
         </div>
 
         {/* User Profile Snippet */}
-        <div className="mx-4 mt-6 mb-4 p-3 bg-primary/5 rounded-xl border border-primary/10 flex items-center gap-3">
+        <div className="mx-4 mt-6 mb-4 p-3 bg-primary/5 rounded-2xl border border-primary/10 flex items-center gap-3">
           <div className="size-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold text-sm shadow-sm">
             WC
           </div>
@@ -75,10 +75,10 @@ export default function AdminLayout({ children }: PropsChildren) {
                 key={item.label}
                 href={item.href}
                 className={cn(
-                  "flex items-center justify-between px-3 py-3 rounded-xl transition-all group",
+                  "flex items-center justify-between px-3 py-3 rounded-2xl transition-all group",
                   isActive
                     ? "bg-primary/10 text-primary"
-                    : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+                    : "text-muted-foreground hover:bg-secondary/70 hover:text-foreground"
                 )}
               >
                 <div className="flex items-center gap-3">
@@ -115,7 +115,7 @@ export default function AdminLayout({ children }: PropsChildren) {
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col h-full overflow-hidden relative">
         {/* Mobile Header */}
-        <header className="md:hidden bg-card border-b border-border p-4 flex items-center justify-between z-30">
+        <header className="md:hidden bg-card/95 border-b border-border/70 p-4 flex items-center justify-between z-30 backdrop-blur-xl">
           <Link href="/" className="flex items-center gap-2">
             <div className="size-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground">
               <LayoutGrid className="h-4 w-4" />
@@ -135,7 +135,7 @@ export default function AdminLayout({ children }: PropsChildren) {
 
         {/* Mobile Menu Dropdown */}
         {mobileMenuOpen && (
-          <div className="md:hidden absolute top-16 left-0 right-0 bg-card border-b border-border z-20 p-4 space-y-1">
+          <div className="md:hidden absolute top-16 left-0 right-0 bg-card/95 border-b border-border/70 z-20 p-4 space-y-1 backdrop-blur-xl">
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive =
@@ -148,10 +148,10 @@ export default function AdminLayout({ children }: PropsChildren) {
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
                   className={cn(
-                    "flex items-center justify-between px-3 py-3 rounded-xl transition-all",
+                    "flex items-center justify-between px-3 py-3 rounded-2xl transition-all",
                     isActive
                       ? "bg-primary/10 text-primary"
-                      : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+                      : "text-muted-foreground hover:bg-secondary/70 hover:text-foreground"
                   )}
                 >
                   <div className="flex items-center gap-3">

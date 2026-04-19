@@ -40,7 +40,7 @@ export default function LazTrackAdminDashboard() {
   ];
 
   return (
-    <div className="p-4 md:p-8 lg:p-10 scroll-smooth">
+    <div className="p-4 md:p-10 lg:p-12 scroll-smooth">
       <div className="max-w-7xl mx-auto flex flex-col gap-8">
         {/* Breadcrumbs & Heading */}
         <div className="flex flex-col gap-6">
@@ -62,7 +62,7 @@ export default function LazTrackAdminDashboard() {
                 <Download className="h-4 w-4" />
                 Export Report
               </Button>
-              <Button className="gap-2 shadow-lg shadow-primary/25">
+              <Button variant="cta" className="gap-2">
                 <Plus className="h-4 w-4" />
                 New Project
               </Button>
@@ -70,10 +70,24 @@ export default function LazTrackAdminDashboard() {
           </div>
         </div>
 
+        <div className="rounded-[28px] border border-border/70 bg-gradient-to-br from-primary/10 via-white to-warning/10 p-6 shadow-[0_30px_80px_-55px_rgba(15,23,42,0.5)]">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Platform Health</p>
+              <h3 className="mt-2 text-2xl font-bold">System is running smoothly</h3>
+              <p className="text-muted-foreground mt-2">All services operational. Reviews and approvals are on schedule.</p>
+            </div>
+            <div className="flex gap-3">
+              <Button variant="outline">View Logs</Button>
+              <Button variant="cta">Run Audit</Button>
+            </div>
+          </div>
+        </div>
+
         {/* Bento Grid Stats */}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
           {/* Stat 1: Total Active Projects */}
-          <div className="bg-card p-6 rounded-2xl shadow-sm border border-border relative group overflow-hidden">
+          <div className="bg-card/95 p-6 rounded-2xl shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)] border border-border/70 relative group overflow-hidden">
             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
               <Kanban className="h-16 w-16 text-primary" />
             </div>
@@ -93,7 +107,7 @@ export default function LazTrackAdminDashboard() {
           </div>
 
           {/* Stat 2: Pending Applications (Highlighted) */}
-          <div className="bg-card p-6 rounded-2xl shadow-sm border-l-4 border-l-amber-500 border-y border-r border-border relative group overflow-hidden">
+          <div className="bg-card/95 p-6 rounded-2xl shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)] border-l-4 border-l-amber-500 border-y border-r border-border/70 relative group overflow-hidden">
             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
               <FileText className="h-16 w-16 text-amber-500" />
             </div>
@@ -115,7 +129,7 @@ export default function LazTrackAdminDashboard() {
           </div>
 
           {/* Stat 3: Flagged Activities */}
-          <div className="bg-card p-6 rounded-2xl shadow-sm border border-border relative group overflow-hidden">
+          <div className="bg-card/95 p-6 rounded-2xl shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)] border border-border/70 relative group overflow-hidden">
             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
               <AlertCircle className="h-16 w-16 text-red-500" />
             </div>
@@ -135,7 +149,7 @@ export default function LazTrackAdminDashboard() {
           </div>
 
           {/* Stat 4: Total Beneficiaries */}
-          <div className="bg-card p-6 rounded-2xl shadow-sm border border-border relative group overflow-hidden">
+          <div className="bg-card/95 p-6 rounded-2xl shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)] border border-border/70 relative group overflow-hidden">
             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
               <Users className="h-16 w-16 text-purple-500" />
             </div>
@@ -158,7 +172,7 @@ export default function LazTrackAdminDashboard() {
         {/* Split Section: Table & Chart */}
         <div className="flex flex-col xl:flex-row gap-6">
           {/* Left: Recent Applications Table (2/3) */}
-          <div className="flex-grow xl:w-2/3 flex flex-col bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
+          <div className="flex-grow xl:w-2/3 flex flex-col bg-card/95 rounded-2xl shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)] border border-border/70 overflow-hidden">
             <div className="p-6 border-b border-border flex justify-between items-center">
               <div>
                 <h3 className="text-lg font-bold text-foreground">Recent Applications</h3>
@@ -208,7 +222,7 @@ export default function LazTrackAdminDashboard() {
           </div>
 
           {/* Right: Project Health (1/3) */}
-          <div className="flex-grow xl:w-1/3 flex flex-col bg-card rounded-2xl shadow-sm border border-border">
+          <div className="flex-grow xl:w-1/3 flex flex-col bg-card/95 rounded-2xl shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)] border border-border/70">
             <div className="p-6 border-b border-border">
               <h3 className="text-lg font-bold text-foreground">Active Project Health</h3>
               <p className="text-sm text-muted-foreground">Current status distribution</p>

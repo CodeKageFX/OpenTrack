@@ -72,7 +72,7 @@ export default function AdminActivityLogs() {
   );
 
   return (
-    <div className="p-4 md:p-8">
+    <div className="mx-auto w-full max-w-6xl p-4 md:p-10">
       <div className="mb-8">
         <h1 className="font-display text-2xl font-bold md:text-3xl">Activity Logs</h1>
         <p className="text-muted-foreground">
@@ -96,7 +96,7 @@ export default function AdminActivityLogs() {
       </div>
 
       {/* Activity List */}
-      <div className="rounded-xl border border-border bg-card">
+      <div className="rounded-2xl border border-border/70 bg-card/95 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)]">
         <div className="divide-y divide-border">
           {filteredActivities.map((activity) => {
             const config = typeConfig[activity.type];
@@ -104,7 +104,7 @@ export default function AdminActivityLogs() {
 
             return (
               <div key={activity.id} className="flex items-start gap-4 p-4 md:p-6">
-                <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-secondary ${config.color}`}>
+                <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-secondary/70 ${config.color}`}>
                   <Icon className="h-5 w-5" />
                 </div>
                 <div className="min-w-0 flex-1">
