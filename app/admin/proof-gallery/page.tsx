@@ -66,7 +66,7 @@ export default function AdminProofGallery() {
   };
 
   return (
-    <div className="p-4 md:p-8">
+    <div className="mx-auto w-full max-w-6xl p-4 md:p-10">
       <div className="mb-8">
         <h1 className="font-display text-2xl font-bold md:text-3xl">Proof Gallery</h1>
         <p className="text-muted-foreground">
@@ -103,7 +103,7 @@ export default function AdminProofGallery() {
         {filteredProofs.map((proof) => (
           <div
             key={proof.id}
-            className="group relative cursor-pointer overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 hover:shadow-lg"
+            className="group relative cursor-pointer overflow-hidden rounded-2xl border border-border/70 bg-card/95 transition-all duration-300 hover:-translate-y-1 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)]"
             onClick={() => setSelectedProof(proof)}
           >
             <div className="aspect-square overflow-hidden">

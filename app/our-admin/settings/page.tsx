@@ -65,7 +65,7 @@ export default function SettingsPage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* General Toggles Card */}
-                <div className="col-span-1 md:col-span-2 rounded-xl border border-border bg-card p-6 shadow-sm">
+                <div className="col-span-1 md:col-span-2 rounded-2xl border border-border/70 bg-card/95 p-6 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)]">
                   <div className="flex flex-col gap-6">
                     {/* Maintenance Mode */}
                     <div className="flex items-center justify-between gap-4">
@@ -88,7 +88,7 @@ export default function SettingsPage() {
                 </div>
 
                 {/* Localization Card */}
-                <div className="rounded-xl border border-border bg-card p-6 shadow-sm flex flex-col gap-4">
+                <div className="rounded-2xl border border-border/70 bg-card/95 p-6 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)] flex flex-col gap-4">
                   <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Localization</h3>
                   <div className="space-y-3">
                     <div>
@@ -122,7 +122,7 @@ export default function SettingsPage() {
                 </div>
 
                 {/* Branding Card */}
-                <div className="rounded-xl border border-border bg-card p-6 shadow-sm flex flex-col gap-4">
+                <div className="rounded-2xl border border-border/70 bg-card/95 p-6 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)] flex flex-col gap-4">
                   <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Custom Branding</h3>
                   <div className="flex items-center gap-4">
                     <div className="h-16 w-16 rounded-lg bg-secondary flex items-center justify-center border border-dashed border-border text-muted-foreground">
@@ -148,7 +148,7 @@ export default function SettingsPage() {
                 <Button variant="link" className="text-sm p-0">View Documentation</Button>
               </div>
 
-              <div className="rounded-xl border border-border bg-card overflow-hidden shadow-sm">
+              <div className="rounded-2xl border border-border/70 bg-card/95 overflow-hidden shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)]">
                 {/* Table Header */}
                 <div className="grid grid-cols-12 gap-4 border-b border-border bg-secondary/50 px-6 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                   <div className="col-span-4">Key Name</div>
@@ -201,7 +201,7 @@ export default function SettingsPage() {
               </div>
 
               {/* Rate Limiting */}
-              <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
+              <div className="rounded-2xl border border-border/70 bg-card/95 p-6 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)]">
                 <h3 className="text-sm font-bold text-foreground mb-4">Rate Limiting</h3>
                 <div className="flex flex-col sm:flex-row gap-4 items-end">
                   <div className="flex-1 w-full">
@@ -228,7 +228,7 @@ export default function SettingsPage() {
 
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* Security Config */}
-                <div className="lg:col-span-2 rounded-xl border border-border bg-card p-6 shadow-sm">
+                <div className="lg:col-span-2 rounded-2xl border border-border/70 bg-card/95 p-6 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)]">
                   <div className="flex flex-col gap-6">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div>
@@ -270,7 +270,7 @@ export default function SettingsPage() {
                 </div>
 
                 {/* Role Capabilities */}
-                <div className="lg:col-span-1 rounded-xl border border-border bg-card p-6 shadow-sm">
+                <div className="lg:col-span-1 rounded-2xl border border-border/70 bg-card/95 p-6 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)]">
                   <h3 className="text-sm font-bold text-foreground mb-4">Admin Capabilities</h3>
                   <div className="space-y-3">
                     <label className="flex items-center gap-3 p-2 rounded hover:bg-secondary cursor-pointer">
@@ -301,7 +301,7 @@ export default function SettingsPage() {
       </div>
 
       {/* Sticky Footer Action Bar */}
-      <div className="sticky bottom-0 z-10 w-full border-t border-border bg-card p-4 shadow-sm">
+      <div className="sticky bottom-0 z-10 w-full border-t border-border/70 bg-card/95 p-4 shadow-[0_20px_60px_-45px_rgba(15,23,42,0.5)]">
         <div className="max-w-5xl mx-auto flex items-center justify-between">
           <p className="text-sm text-muted-foreground hidden sm:block">Unsaved changes will be lost.</p>
           <div className="flex items-center gap-3 ml-auto">

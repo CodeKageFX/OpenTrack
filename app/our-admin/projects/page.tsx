@@ -66,7 +66,7 @@ export default function ProjectsPage() {
   const [regionFilter, setRegionFilter] = useState("all");
 
   return (
-    <div className="p-4 md:p-8 lg:p-10 scroll-smooth">
+    <div className="p-4 md:p-10 lg:p-12 scroll-smooth">
       <div className="max-w-7xl mx-auto flex flex-col gap-6">
         {/* Breadcrumbs & Heading */}
         <div className="flex flex-col gap-6">
@@ -88,7 +88,7 @@ export default function ProjectsPage() {
                 <Download className="h-4 w-4" />
                 Export CSV
               </Button>
-              <Button className="gap-2 shadow-lg shadow-primary/25">
+              <Button variant="cta" className="gap-2">
                 <Plus className="h-4 w-4" />
                 New Project
               </Button>
@@ -97,7 +97,7 @@ export default function ProjectsPage() {
         </div>
 
         {/* Filters */}
-        <div className="bg-card p-4 rounded-xl border border-border shadow-sm flex flex-col md:flex-row gap-4 items-center justify-between">
+        <div className="bg-card/95 p-4 rounded-2xl border border-border/70 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)] flex flex-col md:flex-row gap-4 items-center justify-between">
           <div className="relative w-full md:w-96 group">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
             <Input
@@ -140,7 +140,7 @@ export default function ProjectsPage() {
         </div>
 
         {/* Table */}
-        <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
+        <div className="bg-card/95 rounded-2xl shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)] border border-border/70 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead className="bg-secondary/50 border-b border-border">

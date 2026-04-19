@@ -74,7 +74,7 @@ export default function Donate() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="container py-8 md:py-16">
+      <div className="mx-auto max-w-5xl px-5 sm:px-8 lg:px-10 py-8 md:py-16">
         <Button variant="ghost" asChild className="mb-8">
           <Link href="/">
             <ArrowLeft className="mr-2 h-4 w-4" />
@@ -90,7 +90,13 @@ export default function Donate() {
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6 rounded-3xl border border-border bg-card p-6 md:p-10 shadow-sm">
+          <div className="mb-6 grid grid-cols-3 gap-3 text-center text-xs font-semibold text-muted-foreground">
+            <div className="rounded-full bg-primary/10 text-primary py-2">1. Amount</div>
+            <div className="rounded-full bg-secondary/60 py-2">2. Details</div>
+            <div className="rounded-full bg-secondary/60 py-2">3. Confirm</div>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-6 rounded-[28px] border border-border/70 bg-card/95 p-6 md:p-10 shadow-[0_30px_80px_-55px_rgba(15,23,42,0.5)]">
             <div className="space-y-2">
               <Label htmlFor="name">Full Name *</Label>
               <Input
@@ -142,7 +148,7 @@ export default function Donate() {
             <div className="space-y-2">
               <Label htmlFor="receipt">Upload Receipt (Optional)</Label>
               <div className="flex items-center gap-4">
-                <label className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg border-2 border-dashed border-border px-4 py-8 text-sm text-muted-foreground transition-colors hover:border-primary hover:bg-secondary/50">
+                <label className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-border/70 bg-secondary/40 px-4 py-8 text-sm text-muted-foreground transition-colors hover:border-primary hover:bg-secondary/70">
                   <Upload className="h-5 w-5" />
                   <span>{formData.receipt ? formData.receipt.name : "Click to upload receipt"}</span>
                   <input
@@ -171,7 +177,7 @@ export default function Donate() {
               </Label>
             </div>
 
-            <Button type="submit" size="lg" className="w-full bg-warning hover:bg-warning/90 text-warning-foreground font-bold rounded-full h-14 text-lg shadow-sm" disabled={step === "loading"}>
+            <Button type="submit" size="lg" variant="cta" className="w-full rounded-full h-14 text-lg" disabled={step === "loading"}>
               {step === "loading" ? (
                 <>
                   <Loader2 className="mr-2 h-5 w-5 animate-spin" />

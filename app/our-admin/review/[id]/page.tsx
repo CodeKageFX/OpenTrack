@@ -73,7 +73,7 @@ export default function ApplicationReviewPage() {
   return (
     <div className="flex flex-col h-screen overflow-hidden bg-background">
       {/* Top Navigation Bar */}
-      <header className="flex-none border-b border-border bg-card z-20">
+      <header className="flex-none border-b border-border/70 bg-card/95 z-20 backdrop-blur-xl">
         <div className="px-6 py-3 flex items-center justify-between">
           <div className="flex items-center gap-6">
             {/* Logo Area */}
@@ -102,7 +102,7 @@ export default function ApplicationReviewPage() {
         </div>
 
         {/* Project Header & Status Bar */}
-        <div className="px-6 py-4 bg-secondary/50 border-t border-border flex flex-wrap items-end justify-between gap-4">
+        <div className="px-6 py-4 bg-secondary/50 border-t border-border/70 flex flex-wrap items-end justify-between gap-4">
           <div className="flex flex-col gap-1">
             <div className="flex items-center gap-3">
               <span className="px-2 py-0.5 rounded text-xs font-bold bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20">
@@ -139,25 +139,25 @@ export default function ApplicationReviewPage() {
       {/* Main Content Area: Split Screen */}
       <main className="flex-1 flex overflow-hidden relative">
         {/* LEFT PANEL: Application Data (Scrollable) */}
-        <div className="flex-1 overflow-y-auto bg-secondary/30 p-6 lg:p-8">
+        <div className="flex-1 overflow-y-auto bg-secondary/40 p-6 lg:p-8">
           <div className="max-w-4xl mx-auto flex flex-col gap-8 pb-20">
             {/* Section 1: Overview Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-card p-4 rounded-xl border border-border shadow-sm flex flex-col gap-1">
+              <div className="bg-card/95 p-4 rounded-2xl border border-border/70 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)] flex flex-col gap-1">
                 <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Funding Request</span>
                 <div className="flex items-baseline gap-1">
                   <span className="text-2xl font-bold text-foreground">${applicationData.fundingRequest.toLocaleString()}</span>
                   <span className="text-xs text-muted-foreground">USD</span>
                 </div>
               </div>
-              <div className="bg-card p-4 rounded-xl border border-border shadow-sm flex flex-col gap-1">
+              <div className="bg-card/95 p-4 rounded-2xl border border-border/70 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)] flex flex-col gap-1">
                 <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Project Duration</span>
                 <div className="flex items-baseline gap-1">
                   <span className="text-2xl font-bold text-foreground">{applicationData.duration}</span>
                   <span className="text-xs text-muted-foreground">Months</span>
                 </div>
               </div>
-              <div className="bg-card p-4 rounded-xl border border-border shadow-sm flex flex-col gap-1">
+              <div className="bg-card/95 p-4 rounded-2xl border border-border/70 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)] flex flex-col gap-1">
                 <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Beneficiaries</span>
                 <div className="flex items-baseline gap-1">
                   <span className="text-2xl font-bold text-foreground">{applicationData.beneficiaries.toLocaleString()}</span>
@@ -167,8 +167,8 @@ export default function ApplicationReviewPage() {
             </div>
 
             {/* Section 2: Organization Details */}
-            <section className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
-              <div className="px-6 py-4 border-b border-border bg-secondary/50 flex justify-between items-center">
+            <section className="bg-card/95 rounded-2xl border border-border/70 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)] overflow-hidden">
+              <div className="px-6 py-4 border-b border-border/70 bg-secondary/50 flex justify-between items-center">
                 <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
                   <Building2 className="h-5 w-5 text-primary" />
                   Organization Details
@@ -207,8 +207,8 @@ export default function ApplicationReviewPage() {
             </section>
 
             {/* Section 3: Project Proposal */}
-            <section className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
-              <div className="px-6 py-4 border-b border-border bg-secondary/50">
+            <section className="bg-card/95 rounded-2xl border border-border/70 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)] overflow-hidden">
+              <div className="px-6 py-4 border-b border-border/70 bg-secondary/50">
                 <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
                   <FileText className="h-5 w-5 text-primary" />
                   Project Proposal
@@ -222,7 +222,7 @@ export default function ApplicationReviewPage() {
                   </p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="rounded-lg border border-border p-4 bg-secondary/30">
+                  <div className="rounded-xl border border-border/70 p-4 bg-secondary/30">
                     <h4 className="text-sm font-bold text-foreground mb-3 flex items-center gap-2">
                       <MapPin className="h-4 w-4 text-primary" />
                       Location
@@ -231,7 +231,7 @@ export default function ApplicationReviewPage() {
                       <span className="text-muted-foreground text-sm">Turkana, Kenya</span>
                     </div>
                   </div>
-                  <div className="rounded-lg border border-border p-4 bg-secondary/30">
+                  <div className="rounded-xl border border-border/70 p-4 bg-secondary/30">
                     <h4 className="text-sm font-bold text-foreground mb-3 flex items-center gap-2">
                       <Calendar className="h-4 w-4 text-primary" />
                       Key Milestones
@@ -251,8 +251,8 @@ export default function ApplicationReviewPage() {
             </section>
 
             {/* Section 4: Supporting Documents */}
-            <section className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
-              <div className="px-6 py-4 border-b border-border bg-secondary/50">
+            <section className="bg-card/95 rounded-2xl border border-border/70 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)] overflow-hidden">
+              <div className="px-6 py-4 border-b border-border/70 bg-secondary/50">
                 <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
                   <FolderOpen className="h-5 w-5 text-primary" />
                   Evidence &amp; Documents
@@ -263,7 +263,7 @@ export default function ApplicationReviewPage() {
                   {applicationData.documents.map((doc, index) => (
                     <div
                       key={index}
-                      className="group relative flex flex-col gap-2 p-3 rounded-lg border border-border hover:border-primary/50 hover:shadow-md transition-all bg-card cursor-pointer"
+                      className="group relative flex flex-col gap-2 p-3 rounded-xl border border-border/70 hover:border-primary/50 transition-all bg-card cursor-pointer shadow-[0_18px_40px_-32px_rgba(15,23,42,0.4)]"
                     >
                       <div className="aspect-[4/3] rounded bg-secondary overflow-hidden relative flex items-center justify-center">
                         {doc.type === "pdf" && <FileText className="h-12 w-12 text-muted-foreground/50" />}
@@ -289,8 +289,8 @@ export default function ApplicationReviewPage() {
         </div>
 
         {/* RIGHT PANEL: Audit Sidebar */}
-        <aside className="w-[380px] hidden xl:flex flex-none bg-card border-l border-border flex-col z-10 shadow-xl">
-          <div className="p-5 border-b border-border">
+        <aside className="w-[380px] hidden xl:flex flex-none bg-card/95 border-l border-border/70 flex-col z-10 shadow-[0_30px_70px_-50px_rgba(15,23,42,0.5)]">
+          <div className="p-5 border-b border-border/70">
             <h3 className="font-bold text-foreground flex items-center gap-2">
               <Gavel className="h-5 w-5 text-primary" />
               Review Decision
@@ -353,7 +353,7 @@ export default function ApplicationReviewPage() {
           </div>
 
           {/* Sticky Action Footer */}
-          <div className="p-5 border-t border-border bg-card z-20">
+          <div className="p-5 border-t border-border/70 bg-card/95 z-20">
             <div className="flex flex-col gap-3">
               <Button className="w-full gap-2 shadow-lg shadow-primary/20">
                 <CheckCircle className="h-5 w-5" />

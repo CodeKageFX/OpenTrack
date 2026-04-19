@@ -54,7 +54,7 @@ export default function ApplicationsPage() {
   };
 
   return (
-    <div className="p-4 md:p-8 lg:p-10 scroll-smooth">
+    <div className="p-4 md:p-10 lg:p-12 scroll-smooth">
       <div className="max-w-7xl mx-auto flex flex-col gap-8">
         {/* Breadcrumbs */}
         <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
@@ -73,28 +73,28 @@ export default function ApplicationsPage() {
 
         {/* Stats Overview */}
         <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="flex flex-col justify-between p-5 rounded-xl border border-border bg-card shadow-sm">
+          <div className="flex flex-col justify-between p-5 rounded-2xl border border-border/70 bg-card/95 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)]">
             <p className="text-muted-foreground text-sm font-medium">Total Applications</p>
             <div className="flex items-end justify-between mt-2">
               <span className="text-3xl font-bold text-foreground">{stats.total}</span>
               <FolderOpen className="h-8 w-8 text-primary/40" />
             </div>
           </div>
-          <div className="flex flex-col justify-between p-5 rounded-xl border-l-4 border-l-amber-500 border-y border-r border-border bg-card shadow-sm">
+          <div className="flex flex-col justify-between p-5 rounded-2xl border-l-4 border-l-amber-500 border-y border-r border-border/70 bg-card/95 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)]">
             <p className="text-muted-foreground text-sm font-medium">Pending Review</p>
             <div className="flex items-end justify-between mt-2">
               <span className="text-3xl font-bold text-foreground">{stats.pending}</span>
               <Clock className="h-8 w-8 text-amber-500/40" />
             </div>
           </div>
-          <div className="flex flex-col justify-between p-5 rounded-xl border border-border bg-card shadow-sm">
+          <div className="flex flex-col justify-between p-5 rounded-2xl border border-border/70 bg-card/95 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)]">
             <p className="text-muted-foreground text-sm font-medium">Approved</p>
             <div className="flex items-end justify-between mt-2">
               <span className="text-3xl font-bold text-foreground">{stats.approved}</span>
               <CheckCircle className="h-8 w-8 text-emerald-500/40" />
             </div>
           </div>
-          <div className="flex flex-col justify-between p-5 rounded-xl border border-border bg-card shadow-sm">
+          <div className="flex flex-col justify-between p-5 rounded-2xl border border-border/70 bg-card/95 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)]">
             <p className="text-muted-foreground text-sm font-medium">Rejected</p>
             <div className="flex items-end justify-between mt-2">
               <span className="text-3xl font-bold text-foreground">{stats.rejected}</span>
@@ -155,7 +155,7 @@ export default function ApplicationsPage() {
         </div>
 
         {/* Main Data Table */}
-        <div className="w-full overflow-hidden rounded-xl border border-border shadow-sm bg-card">
+        <div className="w-full overflow-hidden rounded-2xl border border-border/70 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)] bg-card/95">
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>

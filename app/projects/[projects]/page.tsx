@@ -62,7 +62,7 @@ const ProjectDetail = () => {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case "ongoing":
-        return <Badge className="bg-primary text-primary-foreground">Ongoing</Badge>;
+        return <Badge className="bg-primary/10 text-primary border-primary/20">Ongoing</Badge>;
       case "finished":
         return <Badge variant="secondary">Finished</Badge>;
       case "upcoming":
@@ -74,7 +74,37 @@ const ProjectDetail = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <main className="mx-auto px-4 py-8">
+      <main className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10 py-10">
+        <div className="relative mb-10 overflow-hidden rounded-[32px] border border-border/70 bg-gradient-to-br from-primary/10 via-white to-warning/15 p-10 shadow-[0_35px_90px_-60px_rgba(15,23,42,0.55)]">
+          <div className="absolute inset-0 grid-dots opacity-40" />
+          <div className="relative z-10">
+            <div className="flex flex-wrap items-center gap-3">
+              {getStatusBadge(project.status)}
+              <span className="text-sm text-muted-foreground flex items-center gap-1">
+                <Calendar className="h-4 w-4" />
+                Started {new Date(project.createdAt).toLocaleDateString()}
+              </span>
+            </div>
+            <h1 className="mt-4 text-3xl md:text-4xl font-bold tracking-tight">
+              {project.name}
+            </h1>
+            <p className="mt-3 max-w-3xl text-lg text-muted-foreground leading-relaxed">
+              {project.description}
+            </p>
+            <div className="mt-5 flex items-center gap-4 text-sm">
+              <div className="flex items-center gap-2">
+                <User className="h-4 w-4 text-muted-foreground" />
+                <span>by <strong>{project.ownerName}</strong></span>
+              </div>
+              {project.category && (
+                <div className="flex items-center gap-2">
+                  <MapPin className="h-4 w-4 text-muted-foreground" />
+                  <span>{project.category}</span>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
           <Link href="/projects" className="hover:text-foreground transition-colors">
@@ -87,35 +117,6 @@ const ProjectDetail = () => {
         {/* Hero Section */}
         <div className="grid lg:grid-cols-3 gap-8 mb-12">
           <div className="lg:col-span-2 space-y-6">
-            <div className="flex flex-wrap items-center gap-3">
-              {getStatusBadge(project.status)}
-              <span className="text-sm text-muted-foreground flex items-center gap-1">
-                <Calendar className="h-4 w-4" />
-                Started {new Date(project.createdAt).toLocaleDateString()}
-              </span>
-            </div>
-            
-            <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
-              {project.name}
-            </h1>
-            
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              {project.description}
-            </p>
-
-            <div className="flex items-center gap-4 text-sm">
-              <div className="flex items-center gap-2">
-                <User className="h-4 w-4 text-muted-foreground" />
-                <span>by <strong>{project.ownerName}</strong></span>
-              </div>
-              {project.category && (
-                <div className="flex items-center gap-2">
-                  <MapPin className="h-4 w-4 text-muted-foreground" />
-                  <span>{project.category}</span>
-                </div>
-              )}
-            </div>
-
             {/* Items Being Distributed */}
             <Card>
               <CardHeader className="pb-3">
@@ -126,7 +127,7 @@ const ProjectDetail = () => {
                   {projectItems.map((item) => (
                     <div 
                       key={item.id}
-                      className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg"
+                      className="flex items-center gap-2 px-3 py-2 bg-secondary/70 rounded-xl border border-border/70"
                     >
                       <ItemIcon name={item.icon} className="h-4 w-4" />
                       <span className="text-sm font-medium">{item.assignedQuantity} {item.name}</span>
@@ -153,11 +154,11 @@ const ProjectDetail = () => {
                 </div>
 
                 <div className="grid grid-cols-2 gap-4 text-center">
-                  <div className="p-3 bg-muted rounded-lg">
+                  <div className="p-3 bg-secondary/70 rounded-xl border border-border/70">
                     <p className="text-2xl font-bold">{projectDonors.length}</p>
                     <p className="text-xs text-muted-foreground">Donors</p>
                   </div>
-                  <div className="p-3 bg-muted rounded-lg">
+                  <div className="p-3 bg-secondary/70 rounded-xl border border-border/70">
                     <p className="text-2xl font-bold">{project.beneficiariesCount}</p>
                     <p className="text-xs text-muted-foreground">Beneficiaries</p>
                   </div>
@@ -165,7 +166,7 @@ const ProjectDetail = () => {
 
                 <div className="space-y-3">
                   <Link href={`/donate?project=${project.id}`} className="block">
-                    <Button className="w-full" size="lg">
+                    <Button variant="cta" className="w-full" size="lg">
                       <Heart className="mr-2 h-5 w-5" />
                       Donate Now
                     </Button>
@@ -213,33 +214,54 @@ const ProjectDetail = () => {
         </div>
 
         {/* Tabs Section */}
-        <Tabs defaultValue="updates" className="mb-12">
-          <TabsList className="w-full justify-start border-b rounded-none h-auto p-0 bg-transparent">
+        <Tabs defaultValue="story" className="mb-12">
+          <TabsList className="w-full justify-start">
+            <TabsTrigger 
+              value="story"
+            >
+              Story
+            </TabsTrigger>
             <TabsTrigger 
               value="updates"
-              className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent"
             >
               Updates
             </TabsTrigger>
             <TabsTrigger 
               value="donors"
-              className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent"
             >
               Donors ({projectDonors.length})
             </TabsTrigger>
             <TabsTrigger 
               value="beneficiaries"
-              className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent"
             >
               Beneficiaries ({projectBeneficiaries.length})
             </TabsTrigger>
             <TabsTrigger 
               value="proof"
-              className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent"
             >
               Proof Gallery
             </TabsTrigger>
           </TabsList>
+
+          <TabsContent value="story" className="mt-6">
+            <Card>
+              <CardContent className="p-6 space-y-4">
+                <p className="text-muted-foreground leading-relaxed">
+                  {project.description}
+                </p>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div className="rounded-xl border border-border/70 bg-secondary/50 p-4">
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider">Raised</p>
+                    <p className="text-lg font-semibold">{formatCurrency(project.raisedAmount)}</p>
+                  </div>
+                  <div className="rounded-xl border border-border/70 bg-secondary/50 p-4">
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider">Goal</p>
+                    <p className="text-lg font-semibold">{formatCurrency(project.targetAmount)}</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
 
           <TabsContent value="updates" className="mt-6">
             <Card>
@@ -333,7 +355,7 @@ const ProjectDetail = () => {
                     </div>
                     {proof.isVerified && (
                       <div className="absolute top-2 right-2">
-                        <Badge className="bg-primary text-primary-foreground text-xs">
+                        <Badge className="bg-primary/10 text-primary border-primary/20 text-xs">
                           <CheckCircle2 className="h-3 w-3 mr-1" />
                           Verified
                         </Badge>
@@ -365,7 +387,7 @@ const ProjectDetail = () => {
               { step: "3", title: "Distribute", desc: "Items are assigned and delivered" },
               { step: "4", title: "Proof", desc: "Beneficiaries upload proof of receipt" },
             ].map((item) => (
-              <div key={item.step} className="text-center">
+              <div key={item.step} className="text-center rounded-2xl border border-border/70 bg-card/80 p-6 shadow-[0_18px_45px_-38px_rgba(15,23,42,0.4)]">
                 <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xl font-bold mx-auto mb-4">
                   {item.step}
                 </div>

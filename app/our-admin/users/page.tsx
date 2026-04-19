@@ -60,7 +60,7 @@ export default function PlatformUsers() {
   );
 
   return (
-    <div className="p-6 lg:p-8">
+    <div className="mx-auto w-full max-w-6xl p-6 lg:p-10">
       <div className="mb-8">
         <h1 className="font-display text-3xl font-bold">Platform Users</h1>
         <p className="mt-1 text-muted-foreground">
@@ -82,7 +82,7 @@ export default function PlatformUsers() {
       </div>
 
       {/* Users Table */}
-      <div className="rounded-xl border border-border bg-card shadow-sm">
+      <div className="rounded-2xl border border-border/70 bg-card/95 shadow-[0_24px_60px_-45px_rgba(15,23,42,0.45)]">
         <Table>
           <TableHeader>
             <TableRow>

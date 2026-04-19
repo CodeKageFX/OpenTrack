@@ -22,7 +22,7 @@ export function BeneficiaryCard({
 }: BeneficiaryCardProps) {
   return (
     <div className={cn(
-      "group relative overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1",
+      "group relative overflow-hidden rounded-3xl border border-border/70 bg-card shadow-[0_24px_60px_-40px_rgba(15,23,42,0.45)] transition-all duration-300 hover:-translate-y-1",
       className
     )}>
       <div className="aspect-square overflow-hidden">

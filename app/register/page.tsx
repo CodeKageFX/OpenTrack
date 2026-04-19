@@ -97,7 +97,7 @@ export default function Register() {
               Your application is now pending review. We&apos;ll verify your information and 
               notify you via email within 3-5 business days.
             </p>
-            <div className="rounded-lg border border-border bg-secondary/50 p-4 text-left">
+            <div className="rounded-xl border border-border/70 bg-secondary/50 p-4 text-left">
               <h3 className="mb-2 font-semibold">What happens next?</h3>
               <ol className="list-inside list-decimal space-y-1 text-sm text-muted-foreground">
                 <li>Our team reviews your application</li>
@@ -121,7 +121,7 @@ export default function Register() {
     <div className="min-h-screen bg-background">
       <Navbar />
       
-      <div className="container py-8 md:py-16">
+      <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-10 py-8 md:py-16">
         <Button variant="ghost" asChild className="mb-8">
           <Link href="/">
             <ArrowLeft className="mr-2 h-4 w-4" />
@@ -129,15 +129,32 @@ export default function Register() {
           </Link>
         </Button>
 
-        <div className="mx-auto max-w-xl">
-          <div className="mb-8 text-center">
+        <div className="grid gap-8 lg:grid-cols-[1fr_1.1fr] items-start">
+          <div className="rounded-[32px] border border-border/70 bg-gradient-to-br from-primary/10 via-white to-warning/10 p-8 shadow-[0_35px_90px_-60px_rgba(15,23,42,0.55)]">
             <h1 className="mb-4 font-display text-3xl font-bold md:text-4xl">Apply as Beneficiary</h1>
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground mb-6">
               Register to be considered for resources. We&apos;ll review your application and notify you of the outcome.
             </p>
+            <div className="space-y-4">
+              {[
+                { title: "Transparent Selection", desc: "We verify every application with identity and community checks." },
+                { title: "Fast Updates", desc: "Receive status updates and next steps by email." },
+                { title: "Proof-Backed Delivery", desc: "All deliveries are verified for trust and accountability." },
+              ].map((item, idx) => (
+                <div key={idx} className="flex gap-3 rounded-2xl bg-white/70 border border-white/60 p-4">
+                  <div className="h-10 w-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+                    {idx + 1}
+                  </div>
+                  <div>
+                    <p className="font-semibold">{item.title}</p>
+                    <p className="text-sm text-muted-foreground">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6 rounded-3xl border border-border bg-card p-6 md:p-10 shadow-sm">
+          <form onSubmit={handleSubmit} className="space-y-6 rounded-[28px] border border-border/70 bg-card/95 p-6 md:p-10 shadow-[0_30px_80px_-55px_rgba(15,23,42,0.5)]">
             <div className="space-y-2">
               <Label htmlFor="fullName">Full Name *</Label>
               <Input
@@ -255,10 +272,10 @@ export default function Register() {
                   return (
                     <div
                       key={item.id}
-                      className={`flex cursor-pointer items-center gap-3 rounded-lg border p-3 transition-colors ${
+                      className={`flex cursor-pointer items-center gap-3 rounded-xl border p-3 transition-colors ${
                         isSelected
-                          ? "border-primary bg-primary/5"
-                          : "border-border hover:bg-secondary/50"
+                          ? "border-primary/40 bg-primary/5"
+                          : "border-border/70 hover:bg-secondary/50"
                       }`}
                       onClick={() => toggleItem(item.id)}
                     >
@@ -288,7 +305,7 @@ export default function Register() {
             <div className="space-y-2">
               <Label htmlFor="supportingDocument">Supporting Document (Optional)</Label>
               <div className="flex items-center gap-4">
-                <label className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg border-2 border-dashed border-border px-4 py-8 text-sm text-muted-foreground transition-colors hover:border-primary hover:bg-secondary/50">
+                <label className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-border/70 bg-secondary/40 px-4 py-8 text-sm text-muted-foreground transition-colors hover:border-primary hover:bg-secondary/70">
                   <Upload className="h-5 w-5" />
                   <span>{formData.supportingDocument ? formData.supportingDocument.name : "Upload ID or supporting document"}</span>
                   <input
@@ -319,7 +336,7 @@ export default function Register() {
               </Label>
             </div>
 
-            <Button type="submit" size="lg" className="w-full bg-warning hover:bg-warning/90 text-warning-foreground font-bold rounded-full h-14 text-lg shadow-sm" disabled={step === "loading"}>
+            <Button type="submit" size="lg" variant="cta" className="w-full rounded-full h-14 text-lg" disabled={step === "loading"}>
               {step === "loading" ? (
                 <>
                   <Loader2 className="mr-2 h-5 w-5 animate-spin" />
