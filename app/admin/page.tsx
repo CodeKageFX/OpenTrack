@@ -69,7 +69,6 @@ export default function AdminDashboard() {
           </div>
         </div>
       </div>
-      <div className="mb-8" />
 
       {/* Stats Grid */}
       <div className="mb-8 w-full flex flex-wrap gap-3">
