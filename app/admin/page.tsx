@@ -53,14 +53,14 @@ export default function AdminDashboard() {
             <h1 className="font-display text-2xl font-bold md:text-3xl">Dashboard Overview</h1>
             <p className="text-muted-foreground">Track donations, beneficiaries, and distribution progress in real time.</p>
           </div>
-          <div className="flex gap-2">
-            <Button variant="outline" asChild>
+          <div className="flex flex-col gap-2 sm:flex-row">
+            <Button variant="outline" asChild className="w-full sm:w-auto">
               <Link href="/admin/projects">
                 <FolderKanban className="mr-2 h-4 w-4" />
                 View Projects
               </Link>
             </Button>
-            <Button asChild>
+            <Button asChild className="w-full sm:w-auto">
               <Link href="/admin/items">
                 <Plus className="mr-2 h-4 w-4" />
                 Add Items
